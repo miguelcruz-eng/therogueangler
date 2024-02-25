@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.6191, y: 0.6273, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9075322209840019291}
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1889221119, guid: 3ea486dd141182548a1b764a04a7d2f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5bba7e291474e2ad7869b5b008d4a86b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -121,18 +121,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.026582658, y: 0.08480811}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.3400002, y: 3.6235352}
+    oldSize: {x: 1.28, y: 1.28}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.37, y: 3.75}
+  m_Size: {x: 1.3055221, y: 1.0390697}
   m_EdgeRadius: 0
 --- !u!50 &7430682738869926546
 Rigidbody2D:
@@ -171,7 +171,7 @@ Animator:
   m_GameObject: {fileID: 5413898074977187125}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ed0686ca67d02534b8a468a5273370dc, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2d1e94f355616683f9671750b82c9f23, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -194,7 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13bf78e1c913ed847867d2849c14adb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemywalkSpeed: 1
+  enemywalkSpeed: 2
   enemygroundCheckPoint: {fileID: 9075322209840019291}
   enemygorundCheckY: 0.2
   enemygorundCheckX: 0.5

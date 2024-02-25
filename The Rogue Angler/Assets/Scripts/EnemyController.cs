@@ -19,15 +19,16 @@ public class EnemyController : MonoBehaviour
     private float enemyXAxis;
 
     // Valor máximo que pode ser adicionado ou subtraído ao eixo X
-    private float maxChange = 1f;
+    //private float maxChange = 1f;
 
     // Intervalo de tempo mínimo e máximo entre cada mudança
-    private float minInterval = 1f;
-    private float maxInterval = 3f;
+    private float minInterval = 1.5f;
+    private float maxInterval = 2f;
 
     // Contador para controlar o tempo entre cada mudança
     private float changeTimer = 0f;
-    private float changeInterval = 0f;
+    private float changeInterval = 4f;
+    private float changeStop = 2f;
     Animator enemyanim;
 
     // Start is called before the first frame update
@@ -35,8 +36,14 @@ public class EnemyController : MonoBehaviour
     {
         enemyrb = GetComponent<Rigidbody2D>();
         enemyanim = GetComponent<Animator>();
-        // Define o intervalo de tempo inicial antes da primeira mudança
-        changeInterval = Random.Range(minInterval, maxInterval);
+        
+        // Define o intervalo de tempo inicial para a primeira parada
+        changeStop = Random.Range(minInterval, maxInterval);
+        
+        // verifica se a posição está de acordo com a velocidade
+        if(transform.localScale.x == 1f){
+        	enemywalkSpeed *= -1;
+        }
     }
 
     // Update is called once per frame
@@ -44,8 +51,8 @@ public class EnemyController : MonoBehaviour
     {
         controllEnemy();
         Move();
-        Jump();
-        Flip();
+        //Jump();
+        
     }
 
     private void controllEnemy()
@@ -56,37 +63,49 @@ public class EnemyController : MonoBehaviour
         // Verifica se é hora de fazer uma mudança na posição do inimigo
         if (changeTimer >= changeInterval)
         {
-            // Gera um valor aleatório entre -1 e 1 para representar a mudança no eixo X
-            float changeAmount = Random.Range(-maxChange, maxChange);
 
-            // Adiciona o valor gerado à posição atual do inimigo no eixo X
-            enemyXAxis = changeAmount;
+           // Define um novo intervalo de tempo para a próxima parada
+           changeStop = Random.Range(minInterval, maxInterval);
 
-            // Define um novo intervalo de tempo para a próxima mudança
-            changeInterval = Random.Range(minInterval, maxInterval);
-
-            // Reinicia o contador de tempo
-            changeTimer = 0f;
+           // Reinicia o contador de tempo
+           changeTimer = 0f;
+           
+           // vira o inimigo
+           Flip();
+            
+            
         }
     }
 
     void Flip()
     {
-        if(enemyxAxis < 0)
+    	
+        if(transform.localScale.x == 1f)
         {
-            transform.localScale = new Vector2(-0.3f, transform.localScale.y);
+            transform.localScale = new Vector2(-1f, transform.localScale.y);
+            enemywalkSpeed *= -1;
+            
         }
-        else if(enemyxAxis > 0)
+        else
         {
-            transform.localScale = new Vector2(0.3f, transform.localScale.y);
+            transform.localScale = new Vector2(1f, transform.localScale.y);
+            enemywalkSpeed *= -1;
+         
         }
+        
     }
 
     private void Move()
     {
-        enemyrb.velocity = new Vector2(enemywalkSpeed * enemyxAxis, enemyrb.velocity.y);
- 
-        enemyanim.SetBool("Walking", enemyrb.velocity.x != 0 && Grounded());
+       
+        if(changeTimer <= changeStop){
+        	enemyrb.velocity = new Vector2(enemywalkSpeed, enemyrb.velocity.y);
+        }else{
+        	enemyrb.velocity = new Vector2(0, enemyrb.velocity.y);
+        }
+        
+        
+        
     }
 
     public bool Grounded()
