@@ -7,21 +7,39 @@ public class PlayerController : MonoBehaviour
     [Header("Horizontal movement Settings")]
     [SerializeField] private float walkSpeed = 1;
     
+    private float jumpHight = 30;
+    private int jumpBufferCounter = 0;
+    [SerializeField] private int jumpBufferFrames;
 
     [Header("Ground check Settings")]
-    private float jumpHight = 30;
     [SerializeField] private Transform gorundCheckPoint;
     [SerializeField] private float gorundCheckY = 0.2f;
     [SerializeField] private float gorundCheckX = 0.5f;
     [SerializeField] private LayerMask whatIsGround;
 
+    PlayerStats pState;
     private Rigidbody2D rb;
     private float xAxis;
     Animator anim;
 
+    public static PlayerController Instance;
+
+    void Awake()
+    {
+        if(Instance !=null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        pState = GetComponent<PlayerStats>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
     }
@@ -30,9 +48,10 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         GetInputs();
+        UpdateJumpingVariables();
+        Flip();
         Move();
         Jump();
-        Flip();
     }
 
     void GetInputs()
@@ -44,11 +63,11 @@ public class PlayerController : MonoBehaviour
     {
         if(xAxis < 0)
         {
-            transform.localScale = new Vector2(-0.3f, transform.localScale.y);
+            transform.localScale = new Vector2(-0.5f, transform.localScale.y);
         }
         else if(xAxis > 0)
         {
-            transform.localScale = new Vector2(0.3f, transform.localScale.y);
+            transform.localScale = new Vector2(0.5f, transform.localScale.y);
         }
     }
 
@@ -77,13 +96,37 @@ public class PlayerController : MonoBehaviour
         if(Input.GetButtonDown("Jump") && rb.velocity.y > 0)
         {
             rb.velocity = new Vector3(rb.velocity.x, 0);
+
+            pState.jumping = false;
         }
 
-        if(Input.GetButtonDown("Jump") && Grounded())
+        if(!pState.jumping)
         {
-            rb.velocity = new Vector3(rb.velocity.x, jumpHight);
+            if(jumpBufferCounter > 0 && Grounded())
+            {
+                rb.velocity = new Vector3(rb.velocity.x, jumpHight);
+
+                pState.jumping = true;
+            }
         }
+        
 
         anim.SetBool("Jumping", !Grounded());
+    }
+
+    void UpdateJumpingVariables()
+    {
+        if(Grounded())
+        {
+            pState.jumping = false;
+        }
+
+        if(Input.GetButtonDown("Jump"))
+        {
+            jumpBufferCounter = jumpBufferFrames;
+        }else
+        {
+            jumpBufferCounter--;
+        }
     }
 }
