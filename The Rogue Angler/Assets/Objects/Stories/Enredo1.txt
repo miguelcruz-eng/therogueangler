@@ -1,0 +1,11 @@
+Character(Ang, Angler, color=green, image=Angler)
+Character(Fsh, Fish, color=blue, image=Fish)
+label start
+show cenario with Fade
+Ang \"O que é isso? Quem é Você?
+Fsh \"mmmmm...
+Ang \"Como esta respirando?
+Fsh \"grrrrrrrr!!!
+Ang \"Se é isso que quer...
+screen cenario with Fade
+

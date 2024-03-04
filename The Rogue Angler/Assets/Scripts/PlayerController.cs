@@ -63,11 +63,11 @@ public class PlayerController : MonoBehaviour
     {
         if(xAxis < 0)
         {
-            transform.localScale = new Vector2(-0.5f, transform.localScale.y);
+            transform.localScale = new Vector2(-1f, transform.localScale.y);
         }
         else if(xAxis > 0)
         {
-            transform.localScale = new Vector2(0.5f, transform.localScale.y);
+            transform.localScale = new Vector2(1f, transform.localScale.y);
         }
     }
 
