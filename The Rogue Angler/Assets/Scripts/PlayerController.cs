@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     [Header("Horizontal movement Settings")]
     [SerializeField] private float walkSpeed = 1;
     
-    private float jumpHight = 30;
+    private float jumpHight = 20;
     private int jumpBufferCounter = 0;
     [SerializeField] private int jumpBufferFrames;
 
