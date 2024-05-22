@@ -7,9 +7,14 @@ public class PlayerController : MonoBehaviour
     [Header("Horizontal movement Settings")]
     [SerializeField] private float walkSpeed = 1;
     
+    [Header("Vertical movement Settings")]
     private float jumpHight = 20;
     private int jumpBufferCounter = 0;
     [SerializeField] private int jumpBufferFrames;
+    private float coyoteTimeCounter = 0;
+    [SerializeField] private float coyoteTime;
+    private int airJumpCounter = 0;
+    [SerializeField] private int maxAirJumps;
 
     [Header("Ground check Settings")]
     [SerializeField] private Transform gorundCheckPoint;
@@ -17,10 +22,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gorundCheckX = 0.5f;
     [SerializeField] private LayerMask whatIsGround;
 
+    [Header("Dash Settings")]
+    [SerializeField] private float dashSpeed;
+    [SerializeField] private float dashTime;
+    [SerializeField] private float dashCoolDown;
     PlayerStats pState;
     private Rigidbody2D rb;
     private float xAxis;
+    private float gravity;
     Animator anim;
+    private bool canDash = true;
+    private bool dashed;
 
     public static PlayerController Instance;
 
@@ -42,6 +54,7 @@ public class PlayerController : MonoBehaviour
         pState = GetComponent<PlayerStats>();
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        gravity = rb.gravityScale;
     }
 
     // Update is called once per frame
@@ -49,9 +62,11 @@ public class PlayerController : MonoBehaviour
     {
         GetInputs();
         UpdateJumpingVariables();
+        if(pState.dashing) return;
         Flip();
         Move();
         Jump();
+        startDash();
     }
 
     void GetInputs()
@@ -78,6 +93,37 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("Walking", rb.velocity.x != 0 && Grounded());
     }
 
+    void startDash()
+    {
+        if(Input.GetButtonDown("Dash") && canDash && !dashed)
+        {
+            StartCoroutine(Dash());
+            dashed = true;
+        }else
+        {
+            Debug.Log(canDash);
+        }
+
+        if(Grounded())
+        {
+            dashed = false;
+        }
+    }
+
+    IEnumerator Dash()
+    {
+        canDash = false;
+        pState.dashing = true;
+        anim.SetTrigger("Dashing");
+        rb.gravityScale = 0;
+        rb.velocity = new Vector2(transform.localScale.x * dashSpeed, 0);
+        yield return new WaitForSeconds(dashTime);
+        rb.gravityScale = gravity;
+        pState.dashing = false;
+        yield return new WaitForSeconds(dashCoolDown);
+        canDash = true;
+    }
+
     public bool Grounded()
     {
         if(Physics2D.Raycast(gorundCheckPoint.position, Vector2.down, gorundCheckY, whatIsGround)
@@ -102,11 +148,19 @@ public class PlayerController : MonoBehaviour
 
         if(!pState.jumping)
         {
-            if(jumpBufferCounter > 0 && Grounded())
+            if(jumpBufferCounter > 0 && coyoteTime > 0)
             {
                 rb.velocity = new Vector3(rb.velocity.x, jumpHight);
 
                 pState.jumping = true;
+            }
+            else if(!Grounded() && airJumpCounter < maxAirJumps && Input.GetButtonDown("Jump"))
+            {
+                rb.velocity = new Vector3(rb.velocity.x, jumpHight);
+
+                pState.jumping = true;
+
+                airJumpCounter++;
             }
         }
         
@@ -119,6 +173,12 @@ public class PlayerController : MonoBehaviour
         if(Grounded())
         {
             pState.jumping = false;
+            coyoteTimeCounter = coyoteTime;
+            airJumpCounter = 0;
+        }
+        else 
+        {
+            coyoteTimeCounter -= Time.deltaTime;
         }
 
         if(Input.GetButtonDown("Jump"))

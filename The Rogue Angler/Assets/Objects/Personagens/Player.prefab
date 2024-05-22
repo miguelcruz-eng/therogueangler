@@ -176,12 +176,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 3
   jumpBufferFrames: 8
+  coyoteTime: 0.1
+  maxAirJumps: 1
   gorundCheckPoint: {fileID: 9075322209840019291}
   gorundCheckY: 0.2
   gorundCheckX: 0.5
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
+  dashSpeed: 70
+  dashTime: 0.2
+  dashCoolDown: 0.35
 --- !u!95 &1055236997522717925
 Animator:
   serializedVersion: 5
@@ -216,6 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumping: 0
+  dashing: 0
 --- !u!1 &5950766406298003135
 GameObject:
   m_ObjectHideFlags: 0
