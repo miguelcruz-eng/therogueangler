@@ -18,6 +18,13 @@ public class EnemyController : MonoBehaviour
     private Rigidbody2D enemyrb;
     private float enemyXAxis;
 
+    [SerializeField]float health;
+    [SerializeField]float recoilLength;
+    [SerializeField]float recoilFactor;
+    [SerializeField]bool isRecoiling = false;
+
+    float recoilTimer;
+
     // Valor máximo que pode ser adicionado ou subtraído ao eixo X
     //private float maxChange = 1f;
 
@@ -49,12 +56,34 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
+        if(isRecoiling)
+        {
+            if(recoilTimer < recoilLength)
+            {
+                recoilTimer += Time.deltaTime;
+            }else
+            {
+                isRecoiling = false;
+                recoilTimer = 0;
+            }
+        }
         controllEnemy();
         Move();
         //Jump();
-        
     }
 
+    public void EnemyHit(float _damegeDone, Vector2 _hitDirection, float _hitForce)
+    {
+        health -= _damegeDone;
+        if(!isRecoiling)
+        {
+            enemyrb.AddForce(-_hitForce * recoilFactor * _hitDirection);
+        }
+    }
     private void controllEnemy()
     {
         // Incrementa o contador de tempo
@@ -72,8 +101,6 @@ public class EnemyController : MonoBehaviour
            
            // vira o inimigo
            Flip();
-            
-            
         }
     }
 

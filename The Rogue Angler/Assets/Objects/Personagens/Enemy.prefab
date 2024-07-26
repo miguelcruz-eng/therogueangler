@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7430682738869926546}
   - component: {fileID: 1055236997522717925}
   - component: {fileID: 350714462142841239}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,6 +201,10 @@ MonoBehaviour:
   enemywhatIsGround:
     serializedVersion: 2
     m_Bits: 0
+  health: 10
+  recoilLength: 1
+  recoilFactor: 50
+  isRecoiling: 0
 --- !u!1 &5950766406298003135
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +214,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9075322209840019291}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground Check Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}

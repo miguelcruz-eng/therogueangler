@@ -28,11 +28,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashCoolDown;
     PlayerStats pState;
     private Rigidbody2D rb;
-    private float xAxis;
+    private float xAxis, yAxis;
     private float gravity;
     Animator anim;
     private bool canDash = true;
     private bool dashed;
+    
+    [Header("Attack Settings")]
+    bool attack;
+    float timeBetwenAttack, timeSinceAttack;
+    [SerializeField] Transform sideAttackTrasnform;
+    [SerializeField] Vector2 sideAttackArea;
+    [SerializeField] LayerMask attackableLayer;
+    [SerializeField] float damage;
 
     public static PlayerController Instance;
 
@@ -57,6 +65,12 @@ public class PlayerController : MonoBehaviour
         gravity = rb.gravityScale;
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(sideAttackTrasnform.position, sideAttackArea);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -67,11 +81,14 @@ public class PlayerController : MonoBehaviour
         Move();
         Jump();
         startDash();
+        Attack();
     }
 
     void GetInputs()
     {
         xAxis = Input.GetAxisRaw("Horizontal");
+        yAxis = Input.GetAxisRaw("Vertical");
+        attack = Input.GetMouseButtonDown(0);
     }
 
     void Flip()
@@ -101,7 +118,7 @@ public class PlayerController : MonoBehaviour
             dashed = true;
         }else
         {
-            Debug.Log(canDash);
+            // Debug.Log(canDash);
         }
 
         if(Grounded())
@@ -124,6 +141,43 @@ public class PlayerController : MonoBehaviour
         canDash = true;
     }
 
+    void Attack()
+    {
+        timeSinceAttack += Time.deltaTime;
+        if (attack && timeSinceAttack >= timeBetwenAttack)
+        {
+            timeSinceAttack = 0;
+            anim.SetTrigger("Attacking");
+
+            if(yAxis == 0 || yAxis < 0 && Grounded())
+            {
+                Hit(sideAttackTrasnform, sideAttackArea);
+            }else if(yAxis > 0)
+            {
+                //Hit(upAttackTrasnform, upAttackArea);
+            }else if(yAxis < 0 && !Grounded())
+            {
+                //Hit(downAttackTrasnform, downAttackArea);
+            }
+        }
+    }
+
+    private void Hit(Transform _attackTransform, Vector2 _attackArea)
+    {
+        Collider2D[] objectsToHit = Physics2D.OverlapBoxAll(_attackTransform.position, _attackArea, 0, attackableLayer);
+
+        if(objectsToHit.Length > 0)
+        {
+            Debug.Log("Hit");
+        }
+        for(int i = 0; i < objectsToHit.Length; i++)
+        {
+            if(objectsToHit[i].GetComponent<EnemyController>() != null)
+            {
+                objectsToHit[i].GetComponent<EnemyController>().EnemyHit(damage, (transform.position - objectsToHit[i].transform.position).normalized, 100);
+            }
+        }
+    }
     public bool Grounded()
     {
         if(Physics2D.Raycast(gorundCheckPoint.position, Vector2.down, gorundCheckY, whatIsGround)
