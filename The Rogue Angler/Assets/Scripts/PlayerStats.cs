@@ -6,4 +6,8 @@ public class PlayerStats : MonoBehaviour
 {
     public bool jumping = false;
     public bool dashing = false;
+    public bool recoilingX, recoilingY;
+    public bool lookingRight;
+    public bool invincible;
+    public bool healing;
 }

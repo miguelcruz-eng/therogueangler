@@ -124,15 +124,11 @@ public class EnemyController : MonoBehaviour
 
     private void Move()
     {
-       
         if(changeTimer <= changeStop){
         	enemyrb.velocity = new Vector2(enemywalkSpeed, enemyrb.velocity.y);
         }else{
         	enemyrb.velocity = new Vector2(0, enemyrb.velocity.y);
         }
-        
-        
-        
     }
 
     public bool Grounded()

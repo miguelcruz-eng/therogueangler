@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1637733264707739799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8768355119677464983}
+  m_Layer: 0
+  m_Name: Up Attack Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8768355119677464983
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637733264707739799}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7750023778136238331}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2966446110370804882
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4586390356030872380}
+  m_Layer: 0
+  m_Name: Down Attack Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4586390356030872380
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2966446110370804882}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.5, y: -3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7750023778136238331}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5413898074977187125
 GameObject:
   m_ObjectHideFlags: 0
@@ -17,7 +79,7 @@ GameObject:
   - component: {fileID: 4167337217783203013}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,6 +99,8 @@ Transform:
   m_Children:
   - {fileID: 9075322209840019291}
   - {fileID: 7830187533639220016}
+  - {fileID: 8768355119677464983}
+  - {fileID: 4586390356030872380}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4401295322164813898
@@ -178,7 +242,7 @@ MonoBehaviour:
   walkSpeed: 3
   jumpBufferFrames: 8
   coyoteTime: 0.1
-  maxAirJumps: 1
+  maxAirJumps: 0
   gorundCheckPoint: {fileID: 9075322209840019291}
   gorundCheckY: 0.2
   gorundCheckX: 0.5
@@ -188,12 +252,34 @@ MonoBehaviour:
   dashSpeed: 30
   dashTime: 0.2
   dashCoolDown: 0.35
+  dash: {fileID: 3623838497781113619, guid: bed08ca6694e4074f8325c72504f2ceb, type: 3}
   sideAttackTrasnform: {fileID: 7830187533639220016}
-  sideAttackArea: {x: 4, y: 2}
+  upAttackTrasnform: {fileID: 8768355119677464983}
+  downAttackTrasnform: {fileID: 4586390356030872380}
+  sideAttackArea: {x: 3, y: 3}
+  upAttackArea: {x: 2, y: 4}
+  downAttackArea: {x: 2, y: 4}
   attackableLayer:
     serializedVersion: 2
     m_Bits: 64
-  damage: 5
+  timeBetwenAttack: 1
+  damage: 2
+  slash: {fileID: 349481657023918367, guid: 079628905b9c2a740bfa0c6963d53144, type: 3}
+  recoilXSteps: 5
+  recoilYSteps: 5
+  recoilXSpeed: 25
+  recoilYSpeed: 20
+  health: 0
+  maxHealth: 10
+  bloodSpurt: {fileID: 3816336790389724769, guid: a9fe8ad20d8a26340967284f1b1f18b1, type: 3}
+  healPotion: {fileID: 1702459525232437202, guid: fa6c551f2a1f00c4a92be5f9da4d6df0, type: 3}
+  hitFlashSpeed: 1
+  timeToHeal: 1
+  energy: 1
+  energyDrainSpeed: 0.2
+  energyGain: 1
+  energyStorage: {fileID: 0}
+  pState: {fileID: 0}
 --- !u!95 &1055236997522717925
 Animator:
   serializedVersion: 5
@@ -229,6 +315,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumping: 0
   dashing: 0
+  recoilingX: 0
+  recoilingY: 0
+  lookingRight: 1
+  invincible: 0
+  healing: 0
 --- !u!1 &5950766406298003135
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7750023778136238331}
   - component: {fileID: 4401295322164813898}
-  - component: {fileID: 8610402410894475508}
   - component: {fileID: 7430682738869926546}
-  - component: {fileID: 1055236997522717925}
-  - component: {fileID: 350714462142841239}
+  - component: {fileID: 4833213849011703285}
+  - component: {fileID: -7327916227834251820}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -89,51 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &8610402410894475508
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5413898074977187125}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 18f13314880f358488fe5241b918079d, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.026582658, y: 0.08480811}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.3055221, y: 1.0390697}
-  m_EdgeRadius: 0
 --- !u!50 &7430682738869926546
 Rigidbody2D:
   serializedVersion: 4
@@ -157,32 +111,56 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
---- !u!95 &1055236997522717925
-Animator:
-  serializedVersion: 5
+--- !u!61 &4833213849011703285
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5413898074977187125}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2d1e94f355616683f9671750b82c9f23, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &350714462142841239
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.24460816, y: 0.09950161}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.28, y: 1.28}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.7692163, y: 1.031246}
+  m_EdgeRadius: 0
+--- !u!114 &-7327916227834251820
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -191,20 +169,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 5413898074977187125}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13bf78e1c913ed847867d2849c14adb8, type: 3}
+  m_Script: {fileID: 11500000, guid: e658d98ad2ca084478c0819cce8da12c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemywalkSpeed: 2
-  enemygroundCheckPoint: {fileID: 9075322209840019291}
-  enemygorundCheckY: 0.2
-  enemygorundCheckX: 0.5
-  enemywhatIsGround:
-    serializedVersion: 2
-    m_Bits: 0
   health: 10
-  recoilLength: 1
-  recoilFactor: 50
+  recoilLength: 0.5
+  recoilFactor: 5
   isRecoiling: 0
+  player: {fileID: 2885440609629404434, guid: 859ca79131630de40bc15aa68749945f, type: 3}
+  speed: 2
+  damage: 1
 --- !u!1 &5950766406298003135
 GameObject:
   m_ObjectHideFlags: 0
