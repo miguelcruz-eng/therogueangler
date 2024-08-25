@@ -22,9 +22,10 @@ public class CameraScript : MonoBehaviour
     void playerPosition()
     {
         Vector3 targetPosition = PlayerController.Instance.transform.position + offset;
-        targetPosition.y = transform.position.y; // Mantém a posição y da câmera
+        // targetPosition.y = transform.position.y; // Mantém a posição y da câmera
 
         Vector3 newPosition = Vector3.Lerp(transform.position, targetPosition, followSpeed);
-        transform.position = new Vector3(newPosition.x, transform.position.y, transform.position.z);
+        transform.position = newPosition;
+        // transform.position = new Vector3(newPosition.x, transform.position.y, transform.position.z);
     }
 }

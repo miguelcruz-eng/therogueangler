@@ -20,11 +20,6 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        
-    }
-
-    protected virtual void Awake()
-    {
         enemyrb = GetComponent<Rigidbody2D>();
         player = PlayerController.Instance;
     }
@@ -32,13 +27,13 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if(health <= 0)
+        if (health <= 0)
         {
             Destroy(gameObject);
         }
-        if(isRecoiling)
+        if (isRecoiling)
         {
-            if(recoilTimer < recoilLength)
+            if (recoilTimer < recoilLength)
             {
                 recoilTimer += Time.deltaTime;
             }else
@@ -52,7 +47,7 @@ public class Enemy : MonoBehaviour
     public virtual void EnemyHit(float _damegeDone, Vector2 _hitDirection, float _hitForce)
     {
         health -= _damegeDone;
-        if(!isRecoiling)
+        if (!isRecoiling)
         {
             enemyrb.AddForce(-_hitForce * recoilFactor * _hitDirection);
             isRecoiling = true;
@@ -61,7 +56,7 @@ public class Enemy : MonoBehaviour
 
     protected void Flip(float directionX)
     {
-        if(directionX > 0)
+        if (directionX > 0)
         {
             transform.localScale = new Vector2(-1f, transform.localScale.y);
         }
@@ -73,7 +68,7 @@ public class Enemy : MonoBehaviour
 
     protected void OnCollisionStay2D(Collision2D _other)
     {
-        if(_other.gameObject.CompareTag("Player") && !PlayerController.Instance.pState.invincible)
+        if (_other.gameObject.CompareTag("Player") && !PlayerController.Instance.pState.invincible)
         {
             Attack();
             PlayerController.Instance.HitStopTime(0, 5, 0.5f);

@@ -5,21 +5,17 @@ using UnityEngine;
 public class BlueFish : Enemy
 {
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         enemyrb.gravityScale = 12f;
-    }
-
-    protected override void Awake()
-    {
-        base.Awake();
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-        if(!isRecoiling)
+        if (!isRecoiling)
         {
             float directionX = PlayerController.Instance.transform.position.x - transform.position.x;
             transform.position = Vector2.MoveTowards

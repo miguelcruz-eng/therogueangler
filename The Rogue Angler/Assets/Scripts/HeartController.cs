@@ -33,7 +33,7 @@ public class HeartController : MonoBehaviour
     {
         for(int i = 0; i < heartContainers.Length; i++)
         {
-            if(i < PlayerController.Instance.maxHealth)
+            if (i < PlayerController.Instance.maxHealth)
             {
                 heartContainers[i].SetActive(true);
             }
@@ -48,7 +48,7 @@ public class HeartController : MonoBehaviour
     {
         for(int i = 0; i < heartFills.Length; i++)
         {
-            if(i < PlayerController.Instance.health)
+            if (i < PlayerController.Instance.health)
             {
                 heartFills[i].fillAmount = 1;
             }
