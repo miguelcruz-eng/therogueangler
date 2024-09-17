@@ -11,4 +11,5 @@ public class PlayerStats : MonoBehaviour
     public bool invincible;
     public bool healing;
     public bool cutscene = false;
+    public bool alive = true;
 }

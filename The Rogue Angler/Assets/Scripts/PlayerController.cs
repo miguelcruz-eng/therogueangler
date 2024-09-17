@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
     public int maxHealth;
     [SerializeField] GameObject bloodSpurt;
     [SerializeField] GameObject healPotion;
+    [SerializeField] GameObject lifeBar;
     GameObject _healingPotion = null;
     [SerializeField] float hitFlashSpeed;
     public delegate void OnHealthChangedDelegate();
@@ -78,13 +79,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject energyStorage;
     [Space(5)]
 
+    [Header("Camera Settings")]
+    [SerializeField] private float playerFallSpeedTheshold = -10;
+
     [HideInInspector] public PlayerStats pState;
+    [HideInInspector] public Rigidbody2D rb;
     private Animator anim;
-    private Rigidbody2D rb;
     private SpriteRenderer sr;
 
     //Input Variables
     private float xAxis, yAxis;
+    public bool canFlash = true;
     
     public static PlayerController Instance;
 
@@ -114,6 +119,7 @@ public class PlayerController : MonoBehaviour
         energyStorage.GetComponent<Image>().fillAmount = Energy;
 
         Health = maxHealth;
+        lifeBar.GetComponent<Image>().fillAmount = Health / maxHealth;
     }
 
     private void OnDrawGizmos()
@@ -128,21 +134,22 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (pState.cutscene) return;
-
-        GetInputs();
+        if(pState.alive)
+        {
+            GetInputs();
+        }
         UpdateJumpingVariables();
-
-        if (pState.dashing) return;
+        // UpdateCameraYDampingForPlayerFall();
         RestoreTimeScale();
-        FlashWhileInvinclible();
-        Move();
         Heal();
 
-        if (pState.healing) return;
+        if (pState.dashing || pState.healing) return;
         Flip();
+        Move();
         Jump();
         startDash();
         Attack();
+        FlashWhileInvinclible();
     }
 
     private void FixedUpdate()
@@ -186,6 +193,21 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("Walking", rb.velocity.x != 0 && Grounded());
     }
 
+    //camera nao usada ainda
+    void UpdateCameraYDampingForPlayerFall()
+    {
+        if (rb.velocity.y < playerFallSpeedTheshold && !CameraManager.Instance.isLerpingYDamp && !CameraManager.Instance.hasLerpingYDamp)
+        {
+            StartCoroutine(CameraManager.Instance.LerpYDamping(true));
+        }
+
+        if (rb.velocity.y >= 0 && !CameraManager.Instance.isLerpingYDamp && CameraManager.Instance.hasLerpingYDamp)
+        {
+            CameraManager.Instance.hasLerpingYDamp = false;
+            StartCoroutine(CameraManager.Instance.LerpYDamping(false));
+        }
+    }
+
     void startDash()
     {
         if (Input.GetButtonDown("Dash") && canDash && !dashed)
@@ -221,6 +243,7 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator walkIntoNewScene(Vector2 _exitDir, float _delay)
     {
+        pState.invincible = true;
         // se a direção de saida for para cima
         if (_exitDir.y > 0)
         {
@@ -236,6 +259,7 @@ public class PlayerController : MonoBehaviour
 
         Flip();
         yield return new WaitForSeconds(_delay);
+        pState.invincible = false;
         pState.cutscene = false;
     }
 
@@ -249,36 +273,36 @@ public class PlayerController : MonoBehaviour
 
             if (yAxis == 0 || yAxis < 0 && Grounded())
             {
-                Hit(sideAttackTrasnform, sideAttackArea, ref pState.recoilingX, recoilXSpeed);
+                int _recoilLeftOrRight = pState.lookingRight ? 1 : -1;
+
+                Hit(sideAttackTrasnform, sideAttackArea, ref pState.recoilingX, Vector2.right * _recoilLeftOrRight, recoilXSpeed);
                 Instantiate(slash, sideAttackTrasnform);
             }else if (yAxis > 0)
             {
-                Hit(upAttackTrasnform, upAttackArea, ref pState.recoilingY, recoilYSpeed);
+                Hit(upAttackTrasnform, upAttackArea, ref pState.recoilingY, Vector2.up, recoilYSpeed);
                 SlashAngle(slash, 80, upAttackTrasnform);
             }else if (yAxis < 0 && !Grounded())
             {
-                Hit(downAttackTrasnform, downAttackArea, ref pState.recoilingY, recoilYSpeed);
+                Hit(downAttackTrasnform, downAttackArea, ref pState.recoilingY, Vector2.down, recoilYSpeed);
                 SlashAngle(slash, -80, downAttackTrasnform);
             }
         }
     }
 
-    private void Hit(Transform _attackTransform, Vector2 _attackArea, ref bool _recoilDir, float _recoilStrenght)
+    void Hit(Transform _attackTransform, Vector2 _attackArea, ref bool _recoilBool, Vector2 _recoilDir, float _recoilStrenght)
     {
         Collider2D[] objectsToHit = Physics2D.OverlapBoxAll(_attackTransform.position, _attackArea, 0, attackableLayer);
         List<Enemy> hitEnemies = new List<Enemy>();
 
         if (objectsToHit.Length > 0)
         {
-            _recoilDir = true;
+            _recoilBool = true;
         }
         for(int i = 0; i < objectsToHit.Length; i++)
-        {
-            Enemy e = objectsToHit[i].GetComponent<Enemy>();
-            if (e && !hitEnemies.Contains(e))
+        {  
+            if (objectsToHit[i].GetComponent<Enemy>() != null)
             {
-                e.EnemyHit(damage, (transform.position - objectsToHit[i].transform.position).normalized, _recoilStrenght);
-                hitEnemies.Add(e);
+                objectsToHit[i].GetComponent<Enemy>().EnemyHit(damage, _recoilDir, _recoilStrenght);
             }
         }
     }
@@ -356,8 +380,20 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float _damage)
     {
-        Health -= Mathf.RoundToInt(_damage);
-        StartCoroutine(StopTakingDamge());
+        if (pState.alive)
+        {
+            Health -= Mathf.RoundToInt(_damage);
+            if (Health <= 0)
+            {
+                Health = 0;
+                StartCoroutine(Death());
+            }
+            else
+            {
+                StartCoroutine(StopTakingDamge());
+            }
+        }
+        
     }
 
     IEnumerator StopTakingDamge()
@@ -370,11 +406,30 @@ public class PlayerController : MonoBehaviour
         pState.invincible = false;
     }
 
+    IEnumerator Flash()
+    {
+        sr.enabled = !sr.enabled;
+        canFlash = false;
+        yield return new WaitForSeconds(0.2f);
+        canFlash = true;
+    }
+
     void FlashWhileInvinclible()
     {
-        sr.material.color = pState.invincible ? 
-            Color.Lerp(Color.white, Color.black, Mathf.PingPong(Time.time * hitFlashSpeed, 1.0f)) : 
-            Color.white;
+        if(pState.invincible && !pState.cutscene)
+        {
+            if(Time.timeScale > 0.2 && canFlash)
+            {
+                StartCoroutine(Flash());
+            }
+        }
+        else
+        {
+            sr.enabled = true;
+        }
+        // sr.material.color = pState.invincible ? 
+        //     Color.Lerp(Color.white, Color.black, Mathf.PingPong(Time.time * hitFlashSpeed, 1.0f)) : 
+        //     Color.white;
     }
 
     void RestoreTimeScale()
@@ -414,6 +469,28 @@ public class PlayerController : MonoBehaviour
         restoreTime = true;
     }
 
+    IEnumerator Death()
+    {
+        pState.alive = false;
+        Time.timeScale = 1f;
+        GameObject _bloodSpurtParticles = Instantiate(bloodSpurt, transform.position, Quaternion.identity);
+        Destroy(_bloodSpurtParticles, 1.5f);
+        anim.SetTrigger("Death");
+
+        yield return new WaitForSeconds(0.9f);
+        StartCoroutine(UIManager.Instance.ActivateDeathScreen());
+    }
+
+    public void Respawned()
+    {
+        if(!pState.alive)
+        {
+            pState.alive = true;
+            Health = maxHealth;
+            anim.Play("Idle");
+        }
+    }
+
     public int Health
     {
         get { return health; }
@@ -422,6 +499,7 @@ public class PlayerController : MonoBehaviour
             if (health != value)
             {
                 health = Mathf.Clamp(value, 0, maxHealth);
+                lifeBar.GetComponent<Image>().fillAmount = (float)health / maxHealth;
 
                 if (onHealthChangedCallBack != null)
                 {

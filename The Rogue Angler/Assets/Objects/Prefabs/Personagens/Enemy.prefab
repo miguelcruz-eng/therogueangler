@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4401295322164813898}
   - component: {fileID: 7430682738869926546}
   - component: {fileID: 4833213849011703285}
-  - component: {fileID: -7327916227834251820}
+  - component: {fileID: 1371922366432480798}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -56,7 +56,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6f68b8058f6f7164e99fb195fcd206f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5bba7e291474e2ad7869b5b008d4a86b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -160,7 +160,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.7692163, y: 1.031246}
   m_EdgeRadius: 0
---- !u!114 &-7327916227834251820
+--- !u!114 &1371922366432480798
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,14 +169,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5413898074977187125}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e658d98ad2ca084478c0819cce8da12c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7ea96b63078ecbd4f8a93d689fd5b02e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
   recoilLength: 0.5
   recoilFactor: 5
   isRecoiling: 0
-  player: {fileID: 2885440609629404434, guid: 859ca79131630de40bc15aa68749945f, type: 3}
   speed: 2
   damage: 1
 --- !u!1 &5950766406298003135

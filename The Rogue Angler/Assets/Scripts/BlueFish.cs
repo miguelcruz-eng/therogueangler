@@ -4,29 +4,66 @@ using UnityEngine;
 
 public class BlueFish : Enemy
 {
+    [SerializeField] private float flipWaitTime;
+    [SerializeField] private float ledgeCheckX;
+    [SerializeField] private float ledgeCheckY;
+    [SerializeField] private LayerMask whatIsGround;
+
+    float timer;
     // Start is called before the first frame update
     protected override void Start()
     {
         base.Start();
-        enemyrb.gravityScale = 12f;
+        ChangeState(EnemyStates.Idle);
+        rb.gravityScale = 12f;
     }
 
-    // Update is called once per frame
-    protected override void Update()
+    private void OnCollisionEnter2D(Collision2D _other) 
     {
-        base.Update();
-        if (!isRecoiling)
+        if(_other.gameObject.CompareTag("Enemy"))
         {
-            float directionX = PlayerController.Instance.transform.position.x - transform.position.x;
-            transform.position = Vector2.MoveTowards
-                (transform.position, new Vector2(PlayerController.Instance.transform.position.x, transform.position.y),
-                speed * Time.deltaTime);
-            base.Flip(directionX);
+            ChangeState(EnemyStates.Flip);
         }
     }
 
-    public override void EnemyHit(float _damegeDone, Vector2 _hitDirection, float _hitForce)
+   protected override void UpdateEnemyStates()
     {
-        base.EnemyHit(_damegeDone, _hitDirection, _hitForce);
+        if (health <= 0)
+        {
+            Death(0.05f);
+        }
+        
+        switch (GetCurrentEnemyState)
+        {
+            case EnemyStates.Idle:
+                Vector3 _ledgeCheckStart = transform.localScale.x > 0 ? new Vector3(ledgeCheckX, 0) : new Vector3(-ledgeCheckX, 0);
+                Vector2 _wallCheckDir = transform.localScale.x > 0 ? transform.right : -transform.right;
+
+                if (!Physics2D.Raycast(transform.position + _ledgeCheckStart, Vector2.down, ledgeCheckY, whatIsGround)
+                    || Physics2D.Raycast(transform.position, _wallCheckDir, ledgeCheckX, whatIsGround))
+                {
+                    ChangeState(EnemyStates.Flip);
+                }
+                
+                if (transform.localScale.x > 0)
+                {
+                    rb.velocity = new Vector2(speed, rb.velocity.y);
+                }
+                else
+                {
+                    rb.velocity = new Vector2(-speed, rb.velocity.y);
+                }
+                break;
+
+            case EnemyStates.Flip:
+                timer += Time.deltaTime;
+                if (timer > flipWaitTime)
+                {
+                    timer = 0;
+                    transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+                    ChangeState(EnemyStates.Idle);
+                }
+                break;
+        }
     }
 }

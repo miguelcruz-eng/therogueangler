@@ -8,29 +8,52 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float recoilLength;
     [SerializeField] protected float recoilFactor;
     [SerializeField] protected bool isRecoiling = false;
-
-    [SerializeField] protected PlayerController player;
     [SerializeField] protected float speed;
 
     [SerializeField] protected float damage;
+    [SerializeField] protected GameObject orangeBlood;
 
     protected float recoilTimer;
-    protected Rigidbody2D enemyrb;
-    protected float xAxis;
+    protected Rigidbody2D rb;
+    protected SpriteRenderer sr;
+    protected Animator anim;
+
+    protected enum EnemyStates
+    {
+        Idle,
+        Flip,
+        Chase,
+        Stunned,
+        Surpised,
+        Attack,
+        Death
+    }
+    protected EnemyStates currentEnemyState;
+
+    protected virtual EnemyStates GetCurrentEnemyState
+    {
+        get { return currentEnemyState; }
+        set
+        {
+            if (currentEnemyState != value)
+            {
+                currentEnemyState = value;
+
+                ChangeCurrentAnimation();
+            }
+        }
+    }
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        enemyrb = GetComponent<Rigidbody2D>();
-        player = PlayerController.Instance;
+        rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-        }
         if (isRecoiling)
         {
             if (recoilTimer < recoilLength)
@@ -42,6 +65,15 @@ public class Enemy : MonoBehaviour
                 recoilTimer = 0;
             }
         }
+        else
+        {
+            UpdateEnemyStates();
+        }
+
+        if (!PlayerController.Instance.pState.alive)
+        {
+            ChangeState(EnemyStates.Idle);
+        }
     }
 
     public virtual void EnemyHit(float _damegeDone, Vector2 _hitDirection, float _hitForce)
@@ -49,30 +81,39 @@ public class Enemy : MonoBehaviour
         health -= _damegeDone;
         if (!isRecoiling)
         {
-            enemyrb.AddForce(-_hitForce * recoilFactor * _hitDirection);
-            isRecoiling = true;
-        }
-    }
-
-    protected void Flip(float directionX)
-    {
-        if (directionX > 0)
-        {
-            transform.localScale = new Vector2(-1f, transform.localScale.y);
-        }
-        else
-        {
-            transform.localScale = new Vector2(1f, transform.localScale.y);
+            GameObject _orangeBlood = Instantiate(orangeBlood, transform.position, Quaternion.identity);
+            Destroy(_orangeBlood, 5.5f);
+            rb.velocity = _hitForce * recoilFactor * _hitDirection;
         }
     }
 
     protected void OnCollisionStay2D(Collision2D _other)
     {
-        if (_other.gameObject.CompareTag("Player") && !PlayerController.Instance.pState.invincible)
+        if (_other.gameObject.CompareTag("Player") && !PlayerController.Instance.pState.invincible && health > 0)
         {
             Attack();
-            PlayerController.Instance.HitStopTime(0, 5, 0.5f);
+            if (!PlayerController.Instance.pState.alive)
+            {
+                PlayerController.Instance.HitStopTime(0, 5, 0.5f);
+            }
         }
+    }
+
+    protected virtual void Death(float _destroyTime) 
+    {
+        Destroy(gameObject, _destroyTime);
+    }
+
+    protected virtual void UpdateEnemyStates() {}
+
+    protected virtual void ChangeCurrentAnimation()
+    {
+
+    }
+
+    protected void ChangeState(EnemyStates _newState)
+    {
+        GetCurrentEnemyState = _newState;
     }
 
     protected virtual void Attack()
