@@ -89,6 +89,7 @@ public class PlayerController : MonoBehaviour
 
     //Input Variables
     private float xAxis, yAxis;
+    bool openMap;
     public bool canFlash = true;
     
     public static PlayerController Instance;
@@ -137,6 +138,7 @@ public class PlayerController : MonoBehaviour
         if(pState.alive)
         {
             GetInputs();
+            TogleMap();
         }
         UpdateJumpingVariables();
         // UpdateCameraYDampingForPlayerFall();
@@ -165,6 +167,19 @@ public class PlayerController : MonoBehaviour
         xAxis = Input.GetAxisRaw("Horizontal");
         yAxis = Input.GetAxisRaw("Vertical");
         attack = Input.GetButtonDown("Attack");
+        openMap = Input.GetButton("Map");
+    }
+
+    void TogleMap()
+    {
+        if(openMap)
+        {
+            UIManager.Instance.mapHandler.SetActive(true);
+        }
+        else
+        {
+            UIManager.Instance.mapHandler.SetActive(false);
+        }
     }
 
     void Flip()

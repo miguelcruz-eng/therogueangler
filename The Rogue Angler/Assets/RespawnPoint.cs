@@ -20,7 +20,7 @@ public class RespawnPoint : MonoBehaviour
     {
         if (_other.gameObject.CompareTag("Player"))
         {
-            GameManager.Instance.respawnPoint = transform.position;
+            GameManager.Instance.platformingRespawnPoint = transform.position;
         }
     }
 }

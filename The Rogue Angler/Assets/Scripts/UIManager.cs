@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     [SerializeField] GameObject deathScreen;
+    public GameObject mapHandler;
 
     private void Awake()
     {

@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public string transitionedFromScene;
     
+    public Vector2 platformingRespawnPoint;
     public Vector2 respawnPoint;
-    public Vector2 savePoint;
 
     [SerializeField] SavePoint savedLocation;
 
     public static GameManager Instance { get; private set; }
-    public void Awake() {
+    public void Awake()
+    {
+        SaveData.Instance.Initialize();
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -21,28 +24,36 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        
+        SaveScene();
+
         DontDestroyOnLoad(gameObject);
         savedLocation = FindObjectOfType<SavePoint>();
     }
 
+    public void SaveScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SaveData.Instance.sceneNames.Add(currentSceneName);
+        Debug.Log("saved" + currentSceneName);
+    }
+
     public void RespawnPlayer()
     {
-        if(savedLocation != null)
+        if(SaveData.Instance.saveSceneName != null)
         {
-            if(savedLocation.interacted)
-            {
-                savePoint = savedLocation.transform.position;
-            }
-            else
-            {
-                savePoint = respawnPoint;
-            }
+            SceneManager.LoadScene(SaveData.Instance.saveSceneName);
+        }
+        if(SaveData.Instance.savePos != null)
+        {
+            respawnPoint = SaveData.Instance.savePos;
         }
         else
         {
-            savePoint = respawnPoint;
+            respawnPoint = platformingRespawnPoint;
         }
-        PlayerController.Instance.transform.position = savePoint;
+
+        PlayerController.Instance.transform.position = respawnPoint;
         
         StartCoroutine(UIManager.Instance.DeactivateDeathScreen());
         PlayerController.Instance.Respawned();
