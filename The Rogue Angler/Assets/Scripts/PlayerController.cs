@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float coyoteTime;
     private int airJumpCounter = 0;
     [SerializeField] private int maxAirJumps;
+    [SerializeField] private int maxFallingSpeed;
     [Space(5)]
 
     [Header("Ground check Settings")]
@@ -114,6 +115,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+
         gravity = rb.gravityScale;
 
         Energy = energy;
@@ -121,6 +123,14 @@ public class PlayerController : MonoBehaviour
 
         Health = maxHealth;
         lifeBar.GetComponent<Image>().fillAmount = Health / maxHealth;
+
+        SaveData.Instance.LoadPlayerData();
+
+        if (Health == 0)
+        {
+            pState.alive = false;
+            GameManager.Instance.RespawnPlayer();
+        }
     }
 
     private void OnDrawGizmos()
@@ -491,6 +501,8 @@ public class PlayerController : MonoBehaviour
         GameObject _bloodSpurtParticles = Instantiate(bloodSpurt, transform.position, Quaternion.identity);
         Destroy(_bloodSpurtParticles, 1.5f);
         anim.SetTrigger("Death");
+        rb.constraints = RigidbodyConstraints2D.FreezePosition;
+        GetComponent<BoxCollider2D>().enabled = false;
 
         yield return new WaitForSeconds(0.9f);
         StartCoroutine(UIManager.Instance.ActivateDeathScreen());
@@ -500,8 +512,12 @@ public class PlayerController : MonoBehaviour
     {
         if(!pState.alive)
         {
+            rb.constraints = RigidbodyConstraints2D.None;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            GetComponent<BoxCollider2D>().enabled = true;
             pState.alive = true;
             Health = maxHealth;
+            Energy = 1f;
             anim.Play("Idle");
         }
     }
@@ -523,6 +539,7 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+    
     void Heal()
     {
         if (Input.GetButton("Healing") && Health < maxHealth && Energy > 0 && Grounded() && !pState.dashing)
@@ -558,7 +575,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    float Energy
+    public float Energy
     {
         get {return energy; }
         set
@@ -591,7 +608,7 @@ public class PlayerController : MonoBehaviour
         {
             // StartCoroutine(DelayedJump());
             
-            rb.velocity = new Vector3(rb.velocity.x, jumpHight);
+            rb.velocity = new Vector2(rb.velocity.x, jumpHight);
 
             pState.jumping = true;
         }
@@ -607,10 +624,12 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && rb.velocity.y > 3)
         {
-            rb.velocity = new Vector3(rb.velocity.x, 0);
+            rb.velocity = new Vector2(rb.velocity.x, 0);
             pState.jumping = false;
         }
-        
+
+        rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxFallingSpeed, rb.velocity.y));
+
         anim.SetBool("Jumping", !Grounded());
     }
 

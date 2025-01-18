@@ -3717,6 +3717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9295069e827694a4bb9eca174e94b03d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inRange: 0
   interacted: 0
 --- !u!1001 &657034178
 PrefabInstance:
@@ -5385,7 +5386,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5289471978047194989, guid: b5c24259b4a2b314aa78ee2ffffd87b1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -40.64
+      value: -37
       objectReference: {fileID: 0}
     - target: {fileID: 5289471978047194989, guid: b5c24259b4a2b314aa78ee2ffffd87b1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11805,9 +11806,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2752391206858465290, guid: 8b792bd134f6d99419db97ef4374fcb1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.062438965
+      objectReference: {fileID: 0}
     - target: {fileID: 2914119352825631656, guid: 8b792bd134f6d99419db97ef4374fcb1, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7290020763376327660, guid: 8b792bd134f6d99419db97ef4374fcb1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.2199707
       objectReference: {fileID: 0}
     - target: {fileID: 8472683070369650047, guid: 8b792bd134f6d99419db97ef4374fcb1, type: 3}
       propertyPath: maps.Array.size

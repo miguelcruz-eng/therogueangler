@@ -31,6 +31,14 @@ public class GameManager : MonoBehaviour
         savedLocation = FindObjectOfType<SavePoint>();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            SaveData.Instance.SavePlayerData();
+        }
+    }
+
     public void SaveScene()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
@@ -40,6 +48,7 @@ public class GameManager : MonoBehaviour
 
     public void RespawnPlayer()
     {
+        SaveData.Instance.LoadSave();
         if(SaveData.Instance.saveSceneName != null)
         {
             SceneManager.LoadScene(SaveData.Instance.saveSceneName);

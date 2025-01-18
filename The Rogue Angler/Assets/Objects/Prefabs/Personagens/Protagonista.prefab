@@ -305,6 +305,7 @@ MonoBehaviour:
   jumpBufferFrames: 8
   coyoteTime: 0.1
   maxAirJumps: 1
+  maxFallingSpeed: 5
   gorundCheckPoint: {fileID: 5884337435135251731}
   gorundCheckY: 0.2
   gorundCheckX: 0.4
