@@ -12,6 +12,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] SavePoint savedLocation;
 
+    [SerializeField] private FadeUI pauseMenu;
+    [SerializeField] private float fadeTime;
+    public bool gameIsPaused;
+
     public static GameManager Instance { get; private set; }
     public void Awake()
     {
@@ -37,6 +41,20 @@ public class GameManager : MonoBehaviour
         {
             SaveData.Instance.SavePlayerData();
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape) && !gameIsPaused)
+        {
+            pauseMenu.FadeUIIn(fadeTime);
+            Time.timeScale = 0;
+            gameIsPaused = true;
+        }
+    }
+
+    public void UnpauseGame()
+    {
+        Time.timeScale = 1;
+        gameIsPaused = false;
+
     }
 
     public void SaveScene()
