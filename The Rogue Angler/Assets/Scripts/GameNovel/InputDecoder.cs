@@ -97,7 +97,8 @@ public class InputDecoder
 
     public static void end()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        InterfaceElements.SetActive(false);
     }
 
     #region Say Stuff
@@ -149,21 +150,21 @@ public class InputDecoder
             ImageToShow = matches.Groups["ImageFileName"].ToString();
         }
 
-        GameObject PictureInstance = GameObject.Instantiate(ImageInst);
-        PictureInstance.transform.SetParent(canvas.transform, false);
-        PictureInstance.GetComponent<ImageInstance>().FadeIn = FadeEffect;
-        PictureInstance.GetComponent<Image>().color = Color.white;
-        PictureInstance.GetComponent<Image>().sprite = Resources.Load<Sprite>("images/" + ImageToShow);
+        // GameObject PictureInstance = GameObject.Instantiate(ImageInst);
+        // PictureInstance.transform.SetParent(canvas.transform, false);
+        // PictureInstance.GetComponent<ImageInstance>().FadeIn = FadeEffect;
+        // PictureInstance.GetComponent<Image>().color = Color.white;
+        // PictureInstance.GetComponent<Image>().sprite = Resources.Load<Sprite>("images/" + ImageToShow);
 
-        GameObject CharInstanceI = GameObject.Instantiate(PI);
-        CharInstanceI.transform.SetParent(canvas.transform, false);
-        CharInstanceI.GetComponent<Image>().color = Color.white;
-        CharInstanceI.GetComponent<Image>().sprite = Resources.Load<Sprite>("images/" + CharacterList[CharacterList.Count-2].sideImage);
+        // GameObject CharInstanceI = GameObject.Instantiate(PI);
+        // CharInstanceI.transform.SetParent(canvas.transform, false);
+        // CharInstanceI.GetComponent<Image>().color = Color.white;
+        // CharInstanceI.GetComponent<Image>().sprite = Resources.Load<Sprite>("images/" + CharacterList[CharacterList.Count-2].sideImage);
 
-        GameObject CharInstanceII = GameObject.Instantiate(PII);
-        CharInstanceII.transform.SetParent(canvas.transform, false);
-        CharInstanceII.GetComponent<Image>().color = Color.white;
-        CharInstanceII.GetComponent<Image>().sprite = Resources.Load<Sprite>("images/" + CharacterList[CharacterList.Count-1].sideImage);
+        // GameObject CharInstanceII = GameObject.Instantiate(PII);
+        // CharInstanceII.transform.SetParent(canvas.transform, false);
+        // CharInstanceII.GetComponent<Image>().color = Color.white;
+        // CharInstanceII.GetComponent<Image>().sprite = Resources.Load<Sprite>("images/" + CharacterList[CharacterList.Count-1].sideImage);
     }
 
     public static void showAvatar(string StringToParse)
@@ -200,28 +201,28 @@ public class InputDecoder
             ImageToShow = matches.Groups["ImageFileName"].ToString();
         }
 
-        GameObject PictureInstance = GameObject.Instantiate(ImageInst);
-        PictureInstance.transform.SetParent(canvas.transform, false);
-        PictureInstance.GetComponent<ImageInstance>().FadeIn = FadeEffect;
-        PictureInstance.GetComponent<Image>().color = Color.white;
-        PictureInstance.GetComponent<Image>().sprite = Resources.Load<Sprite>("images/" + ImageToShow);
+        // GameObject PictureInstance = GameObject.Instantiate(ImageInst);
+        // PictureInstance.transform.SetParent(canvas.transform, false);
+        // PictureInstance.GetComponent<ImageInstance>().FadeIn = FadeEffect;
+        // PictureInstance.GetComponent<Image>().color = Color.white;
+        // PictureInstance.GetComponent<Image>().sprite = Resources.Load<Sprite>("images/" + ImageToShow);
 
-        GameObject CharInstanceI = GameObject.Instantiate(PI);
-        CharInstanceI.transform.SetParent(canvas.transform, false);
-        CharInstanceI.GetComponent<Image>().color = Color.white;
-        CharInstanceI.GetComponent<Image>().sprite = Resources.Load<Sprite>("images/" + CharacterList[CharacterList.Count-2].sideImage);
+        // GameObject CharInstanceI = GameObject.Instantiate(PI);
+        // CharInstanceI.transform.SetParent(canvas.transform, false);
+        // CharInstanceI.GetComponent<Image>().color = Color.white;
+        // CharInstanceI.GetComponent<Image>().sprite = Resources.Load<Sprite>("images/" + CharacterList[CharacterList.Count-2].sideImage);
 
-        GameObject CharInstanceII = GameObject.Instantiate(PII);
-        CharInstanceII.transform.SetParent(canvas.transform, false);
-        CharInstanceII.GetComponent<Image>().color = Color.white;
-        CharInstanceII.GetComponent<Image>().sprite = Resources.Load<Sprite>("images/" + CharacterList[CharacterList.Count-1].sideImage);
+        // GameObject CharInstanceII = GameObject.Instantiate(PII);
+        // CharInstanceII.transform.SetParent(canvas.transform, false);
+        // CharInstanceII.GetComponent<Image>().color = Color.white;
+        // CharInstanceII.GetComponent<Image>().sprite = Resources.Load<Sprite>("images/" + CharacterList[CharacterList.Count-1].sideImage);
 
         foreach(Transform t in canvas.transform)
         {
-            if(t != PictureInstance.transform)
-            {                
-                MonoBehaviour.Destroy(t.gameObject, 3f);
-            }
+            // if(t != PictureInstance.transform)
+            // {                
+            //     MonoBehaviour.Destroy(t.gameObject, 3f);
+            // }
             InterfaceElements.SetActive(false);
         }
 

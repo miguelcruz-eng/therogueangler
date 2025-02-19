@@ -27,11 +27,8 @@ public class Testing : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int numeroAleatorio = Random.Range(1, 10);
         InputDecoder.InterfaceElements.SetActive(false);
-        InputDecoder.readScript("Script/Enredo"+numeroAleatorio);
-        PlayerPrefs.SetString("QuizData", "Quiz"+numeroAleatorio);
-        PlayerPrefs.SetString("AtencaoData", "atencao"+numeroAleatorio);
+        InputDecoder.readScript("Script/Enredo");
     }
 
     // Update is called once per frame
@@ -48,6 +45,11 @@ public class Testing : MonoBehaviour
                 InputDecoder.InterfaceElements.SetActive(true);
             }
         }*/
+
+        if(Input.GetKeyDown("h"))
+        {
+            seta = true;
+        }
 
         if(InputDecoder.Commands[InputDecoder.CommandLine] != InputDecoder.LastCommand)
         {

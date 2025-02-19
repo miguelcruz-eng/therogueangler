@@ -1,0 +1,9 @@
+Character(ROG, Pescador, color=orange, image=pescador)
+Character(FIS, Peixe, color=blue, image=pexe)
+label start
+show cenario with Fade
+ROG \"OXE.
+FIS \"OXE.
+ROG \"Quem é tu?.
+FIS \"Te interessa nao maluko.
+screen cenario with Fade
