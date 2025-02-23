@@ -1,5 +1,7 @@
 Character(ROG, Pescador, color=orange, image=pescador)
-Character(FIS, Peixe, color=blue, image=pexe)
+Character(VER, Verdinho, color=green, image=verdinho)
 label start
 show cenario with Fade
+ROG \"Valeu verdinho.
+VER \"Valeu pescador, passar bem!
 screen cenario with Fade

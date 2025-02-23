@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SavePoint : MonoBehaviour
+public class Dialogo : MonoBehaviour
 {
     public bool inRange;
     public bool interacted;
     public GameObject botao;
+
+    int interacao = 1;
 
     private void Update()
     {
@@ -15,12 +17,17 @@ public class SavePoint : MonoBehaviour
         {
             interacted = true;
 
-            SaveData.Instance.saveSceneName = SceneManager.GetActiveScene().name;
-            SaveData.Instance.savePos = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
-            SaveData.Instance.SaveLocation();
-            SaveData.Instance.SavePlayerData();
+            InputDecoder.labels = new List<Label>();
 
-            Debug.Log("Salvo");
+            InputDecoder.Commands = new List<string>();
+            InputDecoder.CommandLine = 0;
+            InputDecoder.LastCommand = "";
+
+            InputDecoder.readScript("Script/Verdinho/Dialogo"+interacao);
+
+            interacao = 2;
+
+            Debug.Log("Falando");
         }
     }
 
