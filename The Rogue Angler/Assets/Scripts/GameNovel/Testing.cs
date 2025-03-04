@@ -46,7 +46,7 @@ public class Testing : MonoBehaviour
             }
         }*/
 
-        if(Input.GetKeyDown("h"))
+        if(Input.GetButtonDown("Interact"))
         {
             seta = true;
         }

@@ -13,9 +13,15 @@ public class Dialogo : MonoBehaviour
 
     private void Update()
     {
-        if (inRange && Input.GetButtonDown("Interact"))
+        if (inRange && Input.GetButtonDown("Interact") && !InputDecoder.yapping)
         {
             interacted = true;
+
+            InputDecoder.yapping = true;
+
+            GameManager.Instance.gameIsPaused = true;
+
+            botao.SetActive(false);
 
             InputDecoder.labels = new List<Label>();
 
@@ -28,6 +34,10 @@ public class Dialogo : MonoBehaviour
             interacao = 2;
 
             Debug.Log("Falando");
+        }
+        if (inRange && !InputDecoder.yapping)
+        {
+            botao.SetActive(true);
         }
     }
 

@@ -36,6 +36,8 @@ public class InputDecoder
     public static int CommandLine = 0;
     public static string LastCommand = "";
 
+    public static bool yapping = false;
+
     public static void ParseInputLine(string StringToParse)
     {
         string withOutTabs = StringToParse.Replace("\t", "");
@@ -99,6 +101,8 @@ public class InputDecoder
     {
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         InterfaceElements.SetActive(false);
+        yapping = false;
+        GameManager.Instance.gameIsPaused = false;
     }
 
     #region Say Stuff
