@@ -333,11 +333,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void SlashAngle(GameObject _slash, int _effectAngle, Transform _attackTransform)
+    void  SlashAngle(GameObject _slash, int _effectAngle, Transform _attackTransform)
     {
         _slash = Instantiate(_slash, _attackTransform);
         _slash.transform.eulerAngles = new Vector3(0, 0, _effectAngle);
-        _slash.transform.localScale = new Vector2(transform.localScale.x, transform.localScale.y);
+        //_slash.transform.localScale = new Vector2(transform.localScale.x, transform.localScale.y);
     }
 
     void Recoil()
