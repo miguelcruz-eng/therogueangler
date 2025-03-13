@@ -36,7 +36,7 @@ public class lula : Enemy
         switch (GetCurrentEnemyState)
         {
             case EnemyStates.Idle:
-
+            
                 if (!Physics2D.Raycast(transform.position + _ledgeCheckStart, Vector2.down, ledgeCheckY, whatIsGround)
                     || Physics2D.Raycast(transform.position, _wallCheckDir, ledgeCheckX, whatIsGround))
                 {
