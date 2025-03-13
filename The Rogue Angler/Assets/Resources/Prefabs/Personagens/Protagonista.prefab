@@ -278,7 +278,7 @@ Rigidbody2D:
   m_Mass: 5
   m_LinearDrag: 1
   m_AngularDrag: 1
-  m_GravityScale: 5
+  m_GravityScale: 10
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -305,7 +305,7 @@ MonoBehaviour:
   walkSpeed: 6
   jumpBufferFrames: 8
   coyoteTime: 0.1
-  maxAirJumps: 1
+  maxAirJumps: 0
   maxFallingSpeed: 5
   gorundCheckPoint: {fileID: 5884337435135251731}
   gorundCheckY: 0.2
@@ -334,7 +334,7 @@ MonoBehaviour:
   recoilXSpeed: 25
   recoilYSpeed: 20
   health: 0
-  maxHealth: 10
+  maxHealth: 50
   bloodSpurt: {fileID: 3816336790389724769, guid: a9fe8ad20d8a26340967284f1b1f18b1, type: 3}
   healPotion: {fileID: 1702459525232437202, guid: fa6c551f2a1f00c4a92be5f9da4d6df0, type: 3}
   lifeBar: {fileID: 0}

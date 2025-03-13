@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class lula : Enemy
+public class Boss : Enemy
 {
     [SerializeField] private float ledgeCheckX;
     [SerializeField] private float ledgeCheckY;
@@ -20,6 +20,14 @@ public class lula : Enemy
         rb.gravityScale = 12f;
     }
 
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawWireCube(sideAttackTrasnform.position, sideAttackArea);
+    //     Gizmos.DrawWireCube(upAttackTrasnform.position, upAttackArea);
+    //     Gizmos.DrawWireCube(downAttackTrasnform.position, downAttackArea);
+    // }
+
     private void OnCollisionEnter2D(Collision2D _other) 
     {
         if(_other.gameObject.CompareTag("Enemy"))
@@ -36,7 +44,10 @@ public class lula : Enemy
         switch (GetCurrentEnemyState)
         {
             case EnemyStates.Idle:
-            
+
+                Debug.DrawRay(transform.position + _ledgeCheckStart, Vector2.down * ledgeCheckY, Color.red);
+                Debug.DrawRay(transform.position, _wallCheckDir * ledgeCheckX, Color.blue);
+
                 if (!Physics2D.Raycast(transform.position + _ledgeCheckStart, Vector2.down, ledgeCheckY, whatIsGround)
                     || Physics2D.Raycast(transform.position, _wallCheckDir, ledgeCheckX, whatIsGround))
                 {
@@ -44,6 +55,7 @@ public class lula : Enemy
                 }
 
                 RaycastHit2D _hit = Physics2D.Raycast(transform.position + _ledgeCheckStart, _wallCheckDir, ledgeCheckX * 10);
+                Debug.DrawRay(transform.position + _ledgeCheckStart, _wallCheckDir * (ledgeCheckX * 10), Color.green);
                 if (_hit.collider != null && _hit.collider.gameObject.CompareTag("Player"))
                 {
                     ChangeState(EnemyStates.Surpised);

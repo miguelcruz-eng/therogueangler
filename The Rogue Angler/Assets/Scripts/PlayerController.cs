@@ -10,7 +10,9 @@ public class PlayerController : MonoBehaviour
     [Space(5)]
     
     [Header("Vertical movement Settings")]
-    private float jumpHight = 20;
+    public float jumpCooldown = 0.1f; // Tempo de cooldown entre pulos
+    private float jumpCooldownTimer = 0f; // Temporizador para o cooldown
+    private float jumpHight = 30;
     private int jumpBufferCounter = 0;
     [SerializeField] private int jumpBufferFrames;
     private float coyoteTimeCounter = 0;
@@ -150,6 +152,11 @@ public class PlayerController : MonoBehaviour
         {
             GetInputs();
             TogleMap();
+        }
+        // Atualiza o temporizador de cooldown
+        if (jumpCooldownTimer > 0)
+        {
+            jumpCooldownTimer -= Time.deltaTime;
         }
         UpdateJumpingVariables();
         // UpdateCameraYDampingForPlayerFall();
@@ -333,11 +340,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void SlashAngle(GameObject _slash, int _effectAngle, Transform _attackTransform)
+    void  SlashAngle(GameObject _slash, int _effectAngle, Transform _attackTransform)
     {
         _slash = Instantiate(_slash, _attackTransform);
         _slash.transform.eulerAngles = new Vector3(0, 0, _effectAngle);
-        _slash.transform.localScale = new Vector2(transform.localScale.x, transform.localScale.y);
+        //_slash.transform.localScale = new Vector2(transform.localScale.x, transform.localScale.y);
     }
 
     void Recoil()
@@ -605,32 +612,32 @@ public class PlayerController : MonoBehaviour
 
     void Jump()
     {
-        if (jumpBufferCounter > 0 && coyoteTime > 0 && !pState.jumping)
+        // Verifica se o jogador pode pular (buffer de pulo, coyote time e não está pulando)
+        if (jumpBufferCounter > 0 && coyoteTimeCounter > 0 && !pState.jumping && jumpCooldownTimer <= 0)
         {
-            // StartCoroutine(DelayedJump());
-            
             rb.velocity = new Vector2(rb.velocity.x, jumpHight);
-
             pState.jumping = true;
+            jumpBufferCounter = 0; // Reseta o buffer de pulo após o pulo
         }
 
-        if (!Grounded() && airJumpCounter < maxAirJumps && Input.GetButtonDown("Jump"))
+        // Verifica se o jogador pode realizar um pulo no ar
+        if (!Grounded() && airJumpCounter < maxAirJumps && Input.GetButtonDown("Jump") && rb.velocity.y <= 0)
         {
-            rb.velocity = new Vector3(rb.velocity.x, jumpHight);
-
+            rb.velocity = new Vector2(rb.velocity.x, jumpHight);
             pState.jumping = true;
-
-            airJumpCounter++;
+            airJumpCounter++; // Incrementa o contador de pulos no ar
         }
 
-        if (Input.GetButtonDown("Jump") && rb.velocity.y > 3)
+        // Reduz a velocidade vertical se o botão de pulo for solto
+        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0)
         {
-            rb.velocity = new Vector2(rb.velocity.x, 0);
-            pState.jumping = false;
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f); // Reduz a velocidade vertical
         }
 
+        // Limita a velocidade de queda
         rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxFallingSpeed, rb.velocity.y));
 
+        // Atualiza a animação de pulo
         anim.SetBool("Jumping", !Grounded());
     }
 
@@ -650,15 +657,21 @@ public class PlayerController : MonoBehaviour
     {
         if (Grounded())
         {
-            pState.jumping = false;
-            coyoteTimeCounter = coyoteTime;
-            airJumpCounter = 0;
+            coyoteTimeCounter = coyoteTime; // Reseta o coyote time
+            airJumpCounter = 0; // Reseta o contador de pulos no ar
+            jumpCooldownTimer = 0f;
+            if(pState.jumping)
+            {
+                pState.jumping = false;
+                jumpCooldownTimer = jumpCooldown;
+            }
         }
         else
         {
-            coyoteTimeCounter -= Time.deltaTime;
+            coyoteTimeCounter -= Time.deltaTime; // Decrementa o coyote time
         }
 
+        // Atualiza o buffer de pulo
         if (Input.GetButtonDown("Jump"))
         {
             jumpBufferCounter = jumpBufferFrames;
