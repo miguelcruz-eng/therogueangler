@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
-{   
+{  
     [Header("Horizontal movement Settings")]
     [SerializeField] private float walkSpeed = 2;
     [Space(5)]
