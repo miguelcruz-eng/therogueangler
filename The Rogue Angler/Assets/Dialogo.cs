@@ -5,11 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class Dialogo : MonoBehaviour
 {
+    public string path = "Default";
     public bool inRange;
     public bool interacted;
+    
     public GameObject botao;
 
     int interacao = 1;
+    public int maxInt = 1;
 
     private void Update()
     {
@@ -29,9 +32,15 @@ public class Dialogo : MonoBehaviour
             InputDecoder.CommandLine = 0;
             InputDecoder.LastCommand = "";
 
-            InputDecoder.readScript("Script/Verdinho/Dialogo"+interacao);
+            InputDecoder.readScript("Script/"+path+"/Dialogo"+interacao);
 
-            interacao = 2;
+            if (interacao < maxInt)
+            {
+                interacao ++;
+            }else
+            {
+                interacao = maxInt;
+            }
 
             Debug.Log("Falando");
         }

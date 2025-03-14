@@ -303,9 +303,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 6
+  jumpCooldown: 0.1
   jumpBufferFrames: 8
   coyoteTime: 0.1
-  maxAirJumps: 0
+  maxAirJumps: 1
   maxFallingSpeed: 5
   gorundCheckPoint: {fileID: 5884337435135251731}
   gorundCheckY: 0.2
