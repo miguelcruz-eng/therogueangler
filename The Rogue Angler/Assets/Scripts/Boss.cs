@@ -10,6 +10,12 @@ public class Boss : Enemy
     [SerializeField] private float chargeDuration;
     [SerializeField] private float jumpForce;
     [SerializeField] private LayerMask whatIsGround;
+    [SerializeField] GameObject sideFireBall;
+    [SerializeField] Transform sideAttackTrasnform;
+    [SerializeField] Vector2 sideAttackArea;
+
+    private bool lookingRight = true;
+    private bool isAttacking = false;
 
     float timer;
     // Start is called before the first frame update
@@ -20,13 +26,13 @@ public class Boss : Enemy
         rb.gravityScale = 12f;
     }
 
-    // private void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawWireCube(sideAttackTrasnform.position, sideAttackArea);
-    //     Gizmos.DrawWireCube(upAttackTrasnform.position, upAttackArea);
-    //     Gizmos.DrawWireCube(downAttackTrasnform.position, downAttackArea);
-    // }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(sideAttackTrasnform.position, sideAttackArea);
+        // Gizmos.DrawWireCube(upAttackTrasnform.position, upAttackArea);
+        // Gizmos.DrawWireCube(downAttackTrasnform.position, downAttackArea);
+    }
 
     private void OnCollisionEnter2D(Collision2D _other) 
     {
@@ -36,7 +42,7 @@ public class Boss : Enemy
         }
     }
 
-   protected override void UpdateEnemyStates()
+    protected override void UpdateEnemyStates()
     {   
         Vector3 _ledgeCheckStart = transform.localScale.x > 0 ? new Vector3(ledgeCheckX, 0) : new Vector3(-ledgeCheckX, 0);
         Vector2 _wallCheckDir = transform.localScale.x > 0 ? transform.right : -transform.right;
@@ -64,48 +70,58 @@ public class Boss : Enemy
                 if (transform.localScale.x > 0)
                 {
                     rb.velocity = new Vector2(speed, rb.velocity.y);
+                    lookingRight = true;
                 }
                 else
                 {
                     rb.velocity = new Vector2(-speed, rb.velocity.y);
+                    lookingRight = false;
                 }
                 break;
             case EnemyStates.Surpised:
                 rb.velocity = new Vector2(0, jumpForce);
 
-                ChangeState(EnemyStates.Attack);
+                ChangeState(EnemyStates.Chase);
                 break;
-            case EnemyStates.Attack:
-                timer += Time.deltaTime;
-
-                if (timer <= chargeDuration)
+            case EnemyStates.Chase:
+                
+                if (!isAttacking) // Verifica se o inimigo já está atacando
                 {
-                    if (Physics2D.Raycast(transform.position, Vector2.down, ledgeCheckY, whatIsGround))
-                    {
-                        if (transform.localScale.x > 0)
-                        {
-                            rb.velocity = new Vector2(speed * chargeSpeedMultiplier, rb.velocity.y);
-                        }
-                        else
-                        {
-                            rb.velocity = new Vector2(-speed * chargeSpeedMultiplier, rb.velocity.y);
-                        }
-                    }
-                    else
-                    {
-                        rb.velocity = new Vector2(0, rb.velocity.y);
-                    }
+                    isAttacking = true; // Marca que o inimigo está atacando
+                    StartCoroutine(ThrowFireBall());
                 }
-                else
-                {
-                    timer = 0;
-                    ChangeState(EnemyStates.Idle);
-                }
+                                
                 break;
             case EnemyStates.Death:
                 Death(Random.Range(5, 10));
                 break;
         }
+    }
+
+    IEnumerator ThrowFireBall()
+    {
+        // Aguarda o momento certo para instanciar o fireball
+        anim.SetTrigger("Shoot");
+        yield return new WaitForSeconds(0.50f);
+
+        // Instancia o fireball
+        GameObject _fireBall = Instantiate(sideFireBall, sideAttackTrasnform.position, Quaternion.identity);
+
+        if(lookingRight)
+        {
+            // Define a rotação do fireball
+            _fireBall.transform.eulerAngles = Vector3.zero;
+        } 
+        else
+        {
+            _fireBall.transform.eulerAngles = new Vector2(_fireBall.transform.eulerAngles.x, 180);
+        }   
+
+        yield return new WaitForSeconds(0.40f);
+        isAttacking = false;
+
+        // Muda o estado para Idle
+        ChangeState(EnemyStates.Idle);
     }
 
     public override void EnemyHit(float _damageDone, Vector2 _hitDirection, float _hitForce)

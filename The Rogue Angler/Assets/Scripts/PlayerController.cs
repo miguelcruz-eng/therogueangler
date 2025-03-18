@@ -84,16 +84,22 @@ public class PlayerController : MonoBehaviour
 
     [Header("Camera Settings")]
     [SerializeField] private float playerFallSpeedTheshold = -10;
+    [Space(5)]
+
+    [Header("Sound Settings")]
+    [SerializeField] AudioClip landingSound, jumpSound, dashAndAttackSound, spellSound, hurtSound;
 
     [HideInInspector] public PlayerStats pState;
     [HideInInspector] public Rigidbody2D rb;
     private Animator anim;
     private SpriteRenderer sr;
+    private AudioSource audioSource;
 
     //Input Variables
     private float xAxis, yAxis;
     bool openMap;
     public bool canFlash = true;
+    private bool landingSoundPlayed;
     
     public static PlayerController Instance;
 
@@ -117,6 +123,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 
         gravity = rb.gravityScale;
 
@@ -263,6 +270,7 @@ public class PlayerController : MonoBehaviour
         canDash = false;
         pState.dashing = true;
         anim.SetTrigger("Dashing");
+        audioSource.PlayOneShot(dashAndAttackSound);
         rb.gravityScale = 0;
         int _dir = pState.lookingRight ? 1 : -1;
         rb.velocity = new Vector2(_dir * dashSpeed, 0);
@@ -303,6 +311,7 @@ public class PlayerController : MonoBehaviour
         {
             timeSinceAttack = 0;
             anim.SetTrigger("Attacking");
+            audioSource.PlayOneShot(dashAndAttackSound);
 
             if (yAxis == 0 || yAxis < 0 && Grounded())
             {
@@ -415,6 +424,7 @@ public class PlayerController : MonoBehaviour
     {
         if (pState.alive)
         {
+            audioSource.PlayOneShot(hurtSound);
             Health -= Mathf.RoundToInt(_damage);
             if (Health <= 0)
             {
@@ -552,6 +562,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButton("Healing") && Health < maxHealth && Energy > 0 && Grounded() && !pState.dashing)
         {
+            audioSource.PlayOneShot(spellSound);
             pState.healing = true;
 
             if (_healingPotion == null) // Instancie a poção de cura apenas se ainda não foi instanciada
@@ -615,6 +626,7 @@ public class PlayerController : MonoBehaviour
         // Verifica se o jogador pode pular (buffer de pulo, coyote time e não está pulando)
         if (jumpBufferCounter > 0 && coyoteTimeCounter > 0 && !pState.jumping && jumpCooldownTimer <= 0)
         {
+            audioSource.PlayOneShot(jumpSound);
             rb.velocity = new Vector2(rb.velocity.x, jumpHight);
             pState.jumping = true;
             jumpBufferCounter = 0; // Reseta o buffer de pulo após o pulo
@@ -623,6 +635,7 @@ public class PlayerController : MonoBehaviour
         // Verifica se o jogador pode realizar um pulo no ar
         if (!Grounded() && airJumpCounter < maxAirJumps && Input.GetButtonDown("Jump") && rb.velocity.y <= 0)
         {
+            audioSource.PlayOneShot(jumpSound);
             rb.velocity = new Vector2(rb.velocity.x, jumpHight);
             pState.jumping = true;
             airJumpCounter++; // Incrementa o contador de pulos no ar
@@ -657,6 +670,11 @@ public class PlayerController : MonoBehaviour
     {
         if (Grounded())
         {
+            if(!landingSoundPlayed)
+            {
+                audioSource.PlayOneShot(landingSound);
+                landingSoundPlayed = true;
+            }
             coyoteTimeCounter = coyoteTime; // Reseta o coyote time
             airJumpCounter = 0; // Reseta o contador de pulos no ar
             jumpCooldownTimer = 0f;
@@ -669,6 +687,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             coyoteTimeCounter -= Time.deltaTime; // Decrementa o coyote time
+            landingSoundPlayed = false;
         }
 
         // Atualiza o buffer de pulo
