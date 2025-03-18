@@ -85,4 +85,48 @@ public class GameManager : MonoBehaviour
         StartCoroutine(UIManager.Instance.DeactivateDeathScreen());
         PlayerController.Instance.Respawned();
     }
+
+    public void AtivarObjetoPeloNome(string nomeDoObjeto)
+    {
+        Debug.Log("entrou com " + nomeDoObjeto);
+        // Procura o objeto na hierarquia pelo nome
+        GameObject objeto = GameObject.Find(nomeDoObjeto);
+
+        // Verifica se o objeto foi encontrado
+        if (objeto != null)
+        {
+            foreach (Transform filho in objeto.transform)
+            {
+                // Ativa o filho
+                filho.gameObject.SetActive(true);
+            }
+        }
+        else
+        {
+            // Se o objeto não foi encontrado, exibe um aviso
+            Debug.Log("Objeto com o nome " + nomeDoObjeto + " não foi encontrado na hierarquia.");
+        }
+    }
+
+    public void DesativarObjetoPeloNome(string nomeDoObjeto)
+    {
+        Debug.Log("entrou com " + nomeDoObjeto);
+        // Procura o objeto na hierarquia pelo nome
+        GameObject objeto = GameObject.Find(nomeDoObjeto);
+
+        // Verifica se o objeto foi encontrado
+        if (objeto != null)
+        {
+            foreach (Transform filho in objeto.transform)
+            {
+                // Ativa o filho
+                filho.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            // Se o objeto não foi encontrado, exibe um aviso
+            Debug.Log("Objeto com o nome " + nomeDoObjeto + " não foi encontrado na hierarquia.");
+        }
+    }
 }

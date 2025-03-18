@@ -1,0 +1,13 @@
+Character(ROG, Pescador, color=orange, image=pescador)
+Character(OLD, Anciao, color=red, image=oldman)
+Character(NAR, narracao, color=black)
+Character(PXE, pexe, color=blue, image=pexe)
+label start
+show cenario with Fade
+ROG \"...
+OLD \"Com essa boia, você poderá destrancar o portão daquela dungeon lá fora.
+OLD \"Eu ouvi gritos do verdinho vindos de lá dentro.
+OLD \"Você precisa se apressar!
+ROG \"CERTO!
+active Saida
+screen cenario with Fade

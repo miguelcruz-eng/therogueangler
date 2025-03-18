@@ -1,7 +1,9 @@
 Character(ROG, Pescador, color=orange, image=pescador)
 Character(VER, Verdinho, color=green, image=verdinho)
+Character(NAR, narracao, color=black)
 label start
 show cenario with Fade
+ROG \"...
 ROG \"Verdinho!!! Como você esta?.
 VER \"Ola pescador, estou bem, você tinha visto esse buraco?.
 ROG \"Que buraco enorme! quando isso aconteceu?.

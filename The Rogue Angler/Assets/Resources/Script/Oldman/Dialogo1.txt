@@ -1,0 +1,19 @@
+Character(ROG, Pescador, color=orange, image=pescador)
+Character(OLD, Anciao, color=red, image=oldman)
+Character(NAR, narracao, color=black)
+Character(PXE, pexe, color=blue, image=pexe)
+label start
+show cenario with Fade
+ROG \"...
+OLD \"Rogue, que bom que você veio!
+OLD \"Uma compania pediu para buscar por recursos nessa área.
+OLD \"Pagaram bem...
+OLD \"Mas aparentemente, não era o recurso que eu esperava, há monstos por toda parte!
+ROG \"Ah não cara, preciso proteger a vila, o verdinho está la fora sozinho!
+NAR \"BOOOOOOOOOM!
+OLD \"ROGUE! CUIDADO!
+PXE \"GRRRRRRRRR!
+OLD \"Ataque com o botao esquerdo do mouse, cuidado!
+active Spawn
+deactive Entrada
+screen cenario with Fade

@@ -1,0 +1,9 @@
+Character(ROG, Pescador, color=orange, image=pescador)
+Character(NAR, narracao, color=black)
+Character(PXE, pexe, color=blue, image=pexe)
+label start
+show cenario with Fade
+ROG \"Cara devo ter pego uma insolação...
+ROG \"Como esse peixe foi parar ai em cima?
+PXE \"BLEEE BLEE BLE!
+screen cenario with Fade

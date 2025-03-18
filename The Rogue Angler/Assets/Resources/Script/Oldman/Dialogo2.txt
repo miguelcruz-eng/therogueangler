@@ -1,0 +1,14 @@
+Character(ROG, Pescador, color=orange, image=pescador)
+Character(OLD, Anciao, color=red, image=oldman)
+Character(NAR, narracao, color=black)
+Character(PXE, pexe, color=blue, image=pexe)
+label start
+show cenario with Fade
+ROG \"...
+OLD \"Suba aquelas escadas e derrote esses monstros.
+OLD \"Aproveite e pegue aquela sua boia magica que esqueceu aqui, ela está no baú.
+OLD \"Lembre-se, que ao atacar precionando W ou S você consegue direcionar o seu ataque!
+OLD \"Agora se apresse, o meu neto, o verdinho como você chama, está em perigo!
+ROG \"Pode deixar comigo!
+active Escada
+screen cenario with Fade

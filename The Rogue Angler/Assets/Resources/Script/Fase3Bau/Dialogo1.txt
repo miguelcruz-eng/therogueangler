@@ -1,0 +1,8 @@
+Character(ROG, Pescador, color=orange, image=pescador)
+Character(NAR, narracao, color=black)
+label start
+show cenario with Fade
+ROG \"...
+ROG \"Aqui está, vou ate o Anciao, para saber o que fazer agora.
+active Escada
+screen cenario with Fade

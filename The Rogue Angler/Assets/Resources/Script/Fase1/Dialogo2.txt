@@ -1,0 +1,7 @@
+Character(ROG, Pescador, color=orange, image=pescador)
+Character(NAR, narracao, color=black)
+label start
+show cenario with Fade
+ROG \"Acho melhor levar em consideração o que o verdinho falou antes...
+NAR \"Tente exaurir as opções de dialogo dos NPCs para ter acesso a toda informação disponível.
+screen cenario with Fade

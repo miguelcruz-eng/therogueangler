@@ -1,0 +1,10 @@
+Character(ROG, Pescador, color=orange, image=pescador)
+Character(NAR, narracao, color=black)
+label start
+show cenario with Fade
+ROG \"Vou ter que derrotar esse monstros se quiser prosseguir.
+ROG \"Em caso estremos é so eu usar a velha poção.
+ROG \"Se me lembro bem, é so apertar o botão direito do mouse.
+ROG \"Vamo Nessa!
+deactive Entrada
+screen cenario with Fade

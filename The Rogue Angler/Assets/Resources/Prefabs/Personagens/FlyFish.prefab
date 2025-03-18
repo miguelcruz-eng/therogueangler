@@ -125,7 +125,7 @@ MonoBehaviour:
   recoilLength: 0.05
   recoilFactor: 0.1
   isRecoiling: 0
-  speed: 3
+  speed: 15
   damage: 1
   orangeBlood: {fileID: 5496950027884659228, guid: 3c0ba18a521659d4781e8756838ad231, type: 3}
   chaseDistance: 15

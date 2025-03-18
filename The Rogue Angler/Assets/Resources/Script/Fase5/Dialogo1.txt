@@ -1,0 +1,9 @@
+Character(ROG, Pescador, color=orange, image=pescador)
+Character(NAR, narracao, color=black)
+label start
+show cenario with Fade
+ROG \"Está um caos aqui fora, preciso ter cuidado...
+ROG \"Parece que o ancião estava certo, agora consigo abrir a fechadura com a habilidade da boia.
+ROG \"Preciso chegar no fundo desse buraco!
+deactive Entrada
+screen cenario with Fade

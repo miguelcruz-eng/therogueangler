@@ -1,0 +1,7 @@
+Character(ROG, Pescador, color=orange, image=pescador)
+Character(NAR, narracao, color=black)
+label start
+show cenario with Fade
+deactive Escada
+end
+screen cenario with Fade

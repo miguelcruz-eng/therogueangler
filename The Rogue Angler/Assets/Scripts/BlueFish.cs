@@ -39,6 +39,9 @@ public class BlueFish : Enemy
                 Vector3 _ledgeCheckStart = transform.localScale.x > 0 ? new Vector3(ledgeCheckX, 0) : new Vector3(-ledgeCheckX, 0);
                 Vector2 _wallCheckDir = transform.localScale.x > 0 ? transform.right : -transform.right;
 
+                Debug.DrawRay(transform.position + _ledgeCheckStart, Vector2.down * ledgeCheckY, Color.red);
+                Debug.DrawRay(transform.position, _wallCheckDir * ledgeCheckX, Color.blue);
+
                 if (!Physics2D.Raycast(transform.position + _ledgeCheckStart, Vector2.down, ledgeCheckY, whatIsGround)
                     || Physics2D.Raycast(transform.position, _wallCheckDir, ledgeCheckX, whatIsGround))
                 {

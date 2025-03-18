@@ -86,6 +86,16 @@ public class InputDecoder
             ScreenClear(StringToParse);
         }
 
+        if(args[0] == "active")
+        {
+            Active(StringToParse);
+        }
+
+        if(args[0] == "deactive")
+        {
+            Deactive(StringToParse);
+        }
+
         if(args[0] == "jump")
         {
             jumpTo(StringToParse);
@@ -103,6 +113,18 @@ public class InputDecoder
         InterfaceElements.SetActive(false);
         yapping = false;
         GameManager.Instance.gameIsPaused = false;
+    }
+
+    public static void Active(string StringToParse)
+    {
+        string nomeDoObjeto = StringToParse.Substring(7).Trim();
+        GameManager.Instance.AtivarObjetoPeloNome(nomeDoObjeto);
+    }
+
+    public static void Deactive(string StringToParse)
+    {
+        string nomeDoObjeto = StringToParse.Substring(9).Trim();
+        GameManager.Instance.DesativarObjetoPeloNome(nomeDoObjeto);
     }
 
     #region Say Stuff

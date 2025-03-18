@@ -2,6 +2,7 @@ Character(ROG, Pescador, color=orange, image=pescador)
 Character(VER, Verdinho, color=green, image=verdinho)
 label start
 show cenario with Fade
+ROG \"...
 VER \"Mais uma coisa, O ancião quer ver você!
 ROG \"Onde ele está?
 VER \"Naquela cabana alí, você quase sempre esquece onde ele mora...
