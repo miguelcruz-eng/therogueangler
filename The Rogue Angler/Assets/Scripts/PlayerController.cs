@@ -562,19 +562,19 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButton("Healing") && Health < maxHealth && Energy > 0 && Grounded() && !pState.dashing)
         {
-            audioSource.PlayOneShot(spellSound);
             pState.healing = true;
 
             if (_healingPotion == null) // Instancie a poção de cura apenas se ainda não foi instanciada
             {
                 _healingPotion = Instantiate(healPotion, transform);
+                audioSource.PlayOneShot(spellSound);
             }
 
             // Processo de cura
             healTimer += Time.deltaTime;
             if (healTimer > timeToHeal)
             {
-                Health++;
+                Health+=5;
                 healTimer = 0;
             }
 

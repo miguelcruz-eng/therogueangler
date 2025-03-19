@@ -2149,7 +2149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5910590880733225200, guid: dcadb4dffb7a3a947926e6571f37070b, type: 3}
       propertyPath: damage
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6800842377438204741, guid: dcadb4dffb7a3a947926e6571f37070b, type: 3}
       propertyPath: m_Name
@@ -6206,6 +6206,10 @@ PrefabInstance:
     - target: {fileID: 8173468449398146003, guid: b5c24259b4a2b314aa78ee2ffffd87b1, type: 3}
       propertyPath: dashTime
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8173468449398146003, guid: b5c24259b4a2b314aa78ee2ffffd87b1, type: 3}
+      propertyPath: energyGain
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8173468449398146003, guid: b5c24259b4a2b314aa78ee2ffffd87b1, type: 3}
       propertyPath: energyStorage

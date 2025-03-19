@@ -1,0 +1,13 @@
+Character(ROG, Pescador, color=orange, image=pescador)
+Character(VER, Verdinho, color=green, image=verdinho)
+Character(NAR, narracao, color=black)
+label start
+show cenario with Fade
+ROG \"...
+ROG \"Verdinho!!! O que aconteceu?.
+VER \"Um cara me prendeu aqui depois que eu ouvi a conversa dele.
+VER \"Ele me prendeu aqui e jogou a chave la em baixo, aquele monstro engoliu.
+ROG \"Eu vou tirar você daí, confia em mim.
+VER \"Por favor, eu estou com medo.
+deactive Saida
+screen cenario with Fade

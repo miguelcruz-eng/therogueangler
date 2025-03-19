@@ -199,7 +199,7 @@ MonoBehaviour:
   recoilFactor: 0.1
   isRecoiling: 0
   speed: 2
-  damage: 2
+  damage: 5
   orangeBlood: {fileID: 5496950027884659228, guid: 3c0ba18a521659d4781e8756838ad231, type: 3}
   hurtSound: {fileID: 8300000, guid: fa926849c3136054aa20a1b92e1972fd, type: 3}
   ledgeCheckX: 1.2

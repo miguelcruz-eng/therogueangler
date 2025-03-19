@@ -120,7 +120,7 @@ public class lula : Enemy
         anim.SetBool("Idle", GetCurrentEnemyState == EnemyStates.Idle);
 
         anim.SetBool("Attack", GetCurrentEnemyState == EnemyStates.Attack);
-
+        
         if (GetCurrentEnemyState == EnemyStates.Death)
         {
             anim.SetTrigger("Death");

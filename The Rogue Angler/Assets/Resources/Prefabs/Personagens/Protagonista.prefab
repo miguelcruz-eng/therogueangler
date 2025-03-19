@@ -343,7 +343,7 @@ MonoBehaviour:
   timeToHeal: 1
   energy: 1
   energyDrainSpeed: 0.2
-  energyGain: 1
+  energyGain: 5
   energyStorage: {fileID: 0}
   playerFallSpeedTheshold: -10
   landingSound: {fileID: 8300000, guid: 5caf4ff175ff9e74f8b2d6920c918545, type: 3}

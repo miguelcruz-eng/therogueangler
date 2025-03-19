@@ -8,6 +8,7 @@ public class Boss : Enemy
     [SerializeField] private float ledgeCheckY;
     [SerializeField] private float chargeSpeedMultiplier;
     [SerializeField] private float chargeDuration;
+    [SerializeField] private float stunDuration;
     [SerializeField] private float jumpForce;
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] GameObject sideFireBall;
@@ -80,8 +81,45 @@ public class Boss : Enemy
                 break;
             case EnemyStates.Surpised:
                 rb.velocity = new Vector2(0, jumpForce);
+                rb.velocity = new Vector2(0, jumpForce);
+                rb.velocity = new Vector2(0, jumpForce);
 
                 ChangeState(EnemyStates.Chase);
+                break;
+            case EnemyStates.Attack:
+                timer += Time.deltaTime;
+
+                if (timer <= chargeDuration)
+                {
+                    if (Physics2D.Raycast(transform.position, Vector2.down, ledgeCheckY, whatIsGround))
+                    {
+                        if (transform.localScale.x > 0)
+                        {
+                            rb.velocity = new Vector2(speed * chargeSpeedMultiplier, rb.velocity.y);
+                        }
+                        else
+                        {
+                            rb.velocity = new Vector2(-speed * chargeSpeedMultiplier, rb.velocity.y);
+                        }
+                    }
+                    else
+                    {
+                        rb.velocity = new Vector2(0, rb.velocity.y);
+                    }
+                }
+                else
+                {
+                    timer = 0;
+                    ChangeState(EnemyStates.Stunned);
+                }
+                break;
+            case EnemyStates.Stunned:
+                timer += Time.deltaTime;
+                if (timer > stunDuration)
+                {
+                    ChangeState(EnemyStates.Surpised);
+                    timer = 0;
+                }
                 break;
             case EnemyStates.Chase:
                 
@@ -121,7 +159,7 @@ public class Boss : Enemy
         isAttacking = false;
 
         // Muda o estado para Idle
-        ChangeState(EnemyStates.Idle);
+        ChangeState(EnemyStates.Attack);
     }
 
     public override void EnemyHit(float _damageDone, Vector2 _hitDirection, float _hitForce)
@@ -148,6 +186,8 @@ public class Boss : Enemy
         anim.SetBool("Idle", GetCurrentEnemyState == EnemyStates.Idle);
 
         anim.SetBool("Attack", GetCurrentEnemyState == EnemyStates.Attack);
+
+        anim.SetBool("Stunned", GetCurrentEnemyState == EnemyStates.Stunned);
 
         if (GetCurrentEnemyState == EnemyStates.Death)
         {
