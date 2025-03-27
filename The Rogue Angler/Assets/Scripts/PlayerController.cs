@@ -153,6 +153,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (pState.bobing)
+        {
+            anim.SetTrigger("Attacking");
+        }
         if (GameManager.Instance.gameIsPaused) return;
         if (pState.cutscene) return;
         if(pState.alive)

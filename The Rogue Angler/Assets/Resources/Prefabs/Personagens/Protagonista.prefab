@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2967215213960887271}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Side Attack Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5884337435135251731}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground Check Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6373557063042341356}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Up Attack Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7780496766567039010}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Down Attack Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 7070062137796611}
   - component: {fileID: 4950798199820236742}
   - component: {fileID: 3946614660507344762}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Protagonista
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -375,6 +375,7 @@ MonoBehaviour:
   healing: 0
   cutscene: 0
   alive: 1
+  bobing: 0
 --- !u!95 &4950798199820236742
 Animator:
   serializedVersion: 5

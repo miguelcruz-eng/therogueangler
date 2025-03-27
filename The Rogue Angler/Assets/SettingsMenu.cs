@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -10,6 +11,27 @@ public class SettingsMenu : MonoBehaviour
     public void SetVolume(float _volume)
     {
         audioMixer.SetFloat("Volume", _volume);    
+    }
+
+    public void ResetSavedData()
+    {
+        DeleteData("save.point.data");
+        DeleteData("save.player.data");
+    }
+
+    private void DeleteData(string fileName)
+    {
+        string filePath = Application.persistentDataPath + "/" + fileName;
+
+        if (File.Exists(filePath))
+        {
+            File.Delete(filePath);
+            Debug.Log($"Arquivo {fileName} apagado!");
+        }
+        else
+        {
+            Debug.Log($"Arquivo {fileName} não encontrado.");
+        }
     }
 
     public void SetQuality(int _qualityIndex)

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Death
+  - Bob
   layers:
   - Default
   - TransparentFX
@@ -15,8 +16,8 @@ TagManager:
   - UI
   - Attackable
   - BackGround
-  - 
-  - 
+  - PlayerLayer
+  - BobLayer
   - 
   - 
   - 

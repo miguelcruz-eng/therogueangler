@@ -8,7 +8,6 @@ public class Botao : MonoBehaviour
     public bool inRange;
     public bool interacted;
 
-    public GameObject botao;
     public GameObject button;
     private Animator buttonAnimator;
 
@@ -25,29 +24,24 @@ public class Botao : MonoBehaviour
 
     private void Update()
     {
-        if (inRange && Input.GetButtonDown("Interact"))
+        if (inRange)
         {
             interacted = true;
-
-            botao.SetActive(false);
-
             buttonAnimator.SetBool("Open", true);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D _other)
     {
-        if(_other.CompareTag("Player")) inRange = true;
-        botao.SetActive(true);
+        if(_other.CompareTag("Bob")) inRange = true;
     }
 
     private void OnTriggerExit2D(Collider2D _other)
     {
-        if (_other.CompareTag("Player"));
+        if (_other.CompareTag("Bob"));
         {
             inRange = false;
             interacted = false;
-            botao.SetActive(false);
         }
     }
 }

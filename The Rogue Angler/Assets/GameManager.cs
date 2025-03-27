@@ -54,7 +54,6 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1;
         gameIsPaused = false;
-
     }
 
     public void SaveScene()
