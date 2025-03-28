@@ -181,7 +181,7 @@ public class PlayerController : MonoBehaviour
         startDash();
         Attack();
         FlashWhileInvinclible();
-        Fishing();
+        //Fishing();
     }
 
     private void FixedUpdate()
@@ -566,10 +566,18 @@ public class PlayerController : MonoBehaviour
     public void Fishing()
     {
         // Inicia a pesca ao pressionar o botão
-        if (Input.GetButtonDown("Fishing") && !pState.fishing && Grounded())
+        if (Input.GetButtonDown("Interact") && !pState.fishing && Grounded())
         {   
             pState.fishing = true;
             anim.SetTrigger("Fishing"); // Dispara a animação UMA VEZ
+            if (Health < maxHealth)
+            {
+                Health+=5;
+            }
+            if (Energy < 1)
+            {
+                Energy = 1;
+            }
         }
 
         // Resetar o estado ao terminar a animação

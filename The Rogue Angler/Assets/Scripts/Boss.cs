@@ -15,8 +15,9 @@ public class Boss : Enemy
     [SerializeField] Transform sideAttackTrasnform;
     [SerializeField] Vector2 sideAttackArea;
     [SerializeField] AudioClip roarSound;
+    [SerializeField] AudioClip deathSound;
 
-    private bool lookingRight = false;
+    private bool lookingRight = true;
     private bool isAttacking = false;
 
     float timer;
@@ -64,7 +65,7 @@ public class Boss : Enemy
 
                 RaycastHit2D _hit = Physics2D.Raycast(transform.position + _ledgeCheckStart, _wallCheckDir, ledgeCheckX * 10);
                 Debug.DrawRay(transform.position + _ledgeCheckStart, _wallCheckDir * (ledgeCheckX * 10), Color.green);
-                if (_hit.collider != null && _hit.collider.gameObject.CompareTag("Player"))
+                if (_hit.collider != null && _hit.collider.gameObject.CompareTag("Player") && gameObject.layer != LayerMask.NameToLayer("BackGround2"))
                 {
                     rb.velocity = new Vector2(0, jumpForce);
                     audioSource.PlayOneShot(roarSound);
@@ -144,7 +145,7 @@ public class Boss : Enemy
                                 
                 break;
             case EnemyStates.Death:
-                Death(Random.Range(5, 10));
+                Death(Random.Range(4, 5));
                 break;
         }
     }
@@ -195,7 +196,22 @@ public class Boss : Enemy
     }
 
     protected override void Death(float _destroyTime){
+        audioSource.PlayOneShot(roarSound);
+        StartCoroutine(SpawnBloodRoutine(_destroyTime));
         base.Death(_destroyTime);
+    }
+
+    private IEnumerator SpawnBloodRoutine(float duration)
+    {
+        yield return new WaitForSeconds(duration * Random.Range(0.5f, 1f));
+
+        // Apenas 25% de chance de criar o sangue
+        if (Random.value <= 0.25f) 
+        {
+            Vector2 randomOffset = new Vector2(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f));
+            GameObject _orangeBlood = Instantiate(orangeBlood, (Vector2)transform.position + randomOffset, Quaternion.identity);
+            Destroy(_orangeBlood, 5.5f);
+        }
     }
 
     protected override void ChangeCurrentAnimation()

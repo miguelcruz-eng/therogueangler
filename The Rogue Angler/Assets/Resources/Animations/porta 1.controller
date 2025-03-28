@@ -6,7 +6,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: porta
+  m_Name: porta 1
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Open
@@ -48,7 +48,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c05784b3af639cc4d91fb9327b545686, type: 2}
+  m_Motion: {fileID: 7400000, guid: 45e12fb9aa9aa324c89ae8fd1fd90687, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

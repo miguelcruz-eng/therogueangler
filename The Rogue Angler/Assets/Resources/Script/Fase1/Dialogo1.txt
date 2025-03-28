@@ -8,5 +8,6 @@ NAR \"Para andar, use as teclas W A S D.
 NAR \"Para pular use a tecla "espaço".
 NAR \"Nessa demo, está habilitada a opção de pulo duplo.
 NAR \"Caso tenha alguma duvida, vá ao menu e clique em ajuda.
-NAR \"Se divirta!.
+NAR \"Lembre-se vá ao barco para salvar.
+NAR \"Se divirta!
 screen cenario with Fade

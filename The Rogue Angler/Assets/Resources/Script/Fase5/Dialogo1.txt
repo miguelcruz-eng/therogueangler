@@ -4,6 +4,7 @@ label start
 show cenario with Fade
 ROG \"Está um caos aqui fora, preciso ter cuidado...
 ROG \"Parece que o ancião estava certo, agora consigo abrir a fechadura com a habilidade da boia.
+ROG \"Não tinha reparado aquele buraco na parede, se eu me posicionar direio consigo usar a linha mágica e acionar o botão.
 ROG \"Preciso chegar no fundo desse buraco!
 deactive Entrada
 screen cenario with Fade

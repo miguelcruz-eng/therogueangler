@@ -44,7 +44,7 @@ public class lula : Enemy
                 }
 
                 RaycastHit2D _hit = Physics2D.Raycast(transform.position + _ledgeCheckStart, _wallCheckDir, ledgeCheckX * 10);
-                if (_hit.collider != null && _hit.collider.gameObject.CompareTag("Player"))
+                if (_hit.collider != null && _hit.collider.gameObject.CompareTag("Player") && gameObject.layer != LayerMask.NameToLayer("BackGround"))
                 {
                     ChangeState(EnemyStates.Surpised);
                 }

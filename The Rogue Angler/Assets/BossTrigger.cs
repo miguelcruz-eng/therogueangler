@@ -10,6 +10,7 @@ public class BossTrigger : MonoBehaviour
 
     public GameObject button;
     private Animator buttonAnimator;
+    public GameObject music;
 
     void Start()
     {
@@ -24,23 +25,28 @@ public class BossTrigger : MonoBehaviour
 
     private void Update()
     {
-        if (inRange)
+        if (inRange && !interacted)
         {
             interacted = true;
             buttonAnimator.SetBool("Open", true);
+            music.SetActive(true);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D _other)
     {
-        if(_other.CompareTag("Player")) inRange = true;
+        if(_other.CompareTag("Player"))
+        {
+            Debug.Log("entrou");
+            inRange = true;
+        } 
     }
 
     private void OnTriggerExit2D(Collider2D _other)
     {
-        if (_other.CompareTag("Player"));
+        if (_other.CompareTag("Player"))
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 1f);
         }
     }
 }

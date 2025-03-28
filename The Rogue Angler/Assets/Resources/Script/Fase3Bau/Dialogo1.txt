@@ -1,8 +1,11 @@
 Character(ROG, Pescador, color=orange, image=pescador)
 Character(NAR, narracao, color=black)
+Character(OLD, Anciao, color=red, image=oldman)
 label start
 show cenario with Fade
 ROG \"...
 ROG \"Aqui está, vou ate o Anciao, para saber o que fazer agora.
+OLD \"Rogue, corra aqui em baixo, em quanto eu me defendia, uma dessas coisas virou uma poça brilhante!!!
+ROG \"Poça? Acho que essa boia da dungeon vai ser mais útil do que eu esperava...
 active Escada
 screen cenario with Fade

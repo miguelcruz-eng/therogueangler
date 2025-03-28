@@ -6,6 +6,10 @@ label start
 show cenario with Fade
 ROG \"...
 OLD \"Com essa boia, você poderá destrancar o portão daquela dungeon lá fora.
+OLD \"Aparentemente você sabe pra que essa poça ai serve, ela emana energia, me é familiar.
+ROG \"Isso não está certo, essa energia não deveria aparecer por aqui!
+ROG \"Mas vai ser util, estava cansado de ter que fabricar minhas proprias poções, isso me dá um estoque quase ilimitado!
+ROG \"Pena que não tenho frascos comigo... Mas posso usar as habilidades mágicas momentaneamente!
 OLD \"Eu ouvi gritos do verdinho vindos de lá dentro.
 OLD \"Você precisa se apressar!
 ROG \"CERTO!
