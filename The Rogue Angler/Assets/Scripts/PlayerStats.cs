@@ -13,4 +13,5 @@ public class PlayerStats : MonoBehaviour
     public bool cutscene = false;
     public bool alive = true;
     public bool bobing = false;
+    public bool fishing = false;
 }

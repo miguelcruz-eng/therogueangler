@@ -181,6 +181,7 @@ public class PlayerController : MonoBehaviour
         startDash();
         Attack();
         FlashWhileInvinclible();
+        Fishing();
     }
 
     private void FixedUpdate()
@@ -562,6 +563,23 @@ public class PlayerController : MonoBehaviour
         }
     }
     
+    public void Fishing()
+    {
+        // Inicia a pesca ao pressionar o botão
+        if (Input.GetButtonDown("Fishing") && !pState.fishing && Grounded())
+        {   
+            pState.fishing = true;
+            anim.SetTrigger("Fishing"); // Dispara a animação UMA VEZ
+        }
+
+        // Resetar o estado ao terminar a animação
+        if (pState.fishing && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        {
+            pState.fishing = false;
+            anim.Play("Idle");
+        }
+    }
+
     void Heal()
     {
         if (Input.GetButton("Healing") && Health < maxHealth && Energy > 0 && Grounded() && !pState.dashing)
