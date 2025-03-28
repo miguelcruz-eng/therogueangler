@@ -14,8 +14,9 @@ public class Boss : Enemy
     [SerializeField] GameObject sideFireBall;
     [SerializeField] Transform sideAttackTrasnform;
     [SerializeField] Vector2 sideAttackArea;
+    [SerializeField] AudioClip roarSound;
 
-    private bool lookingRight = true;
+    private bool lookingRight = false;
     private bool isAttacking = false;
 
     float timer;
@@ -65,23 +66,23 @@ public class Boss : Enemy
                 Debug.DrawRay(transform.position + _ledgeCheckStart, _wallCheckDir * (ledgeCheckX * 10), Color.green);
                 if (_hit.collider != null && _hit.collider.gameObject.CompareTag("Player"))
                 {
+                    rb.velocity = new Vector2(0, jumpForce);
+                    audioSource.PlayOneShot(roarSound);
                     ChangeState(EnemyStates.Surpised);
                 }
                 
-                if (transform.localScale.x > 0)
-                {
-                    rb.velocity = new Vector2(speed, rb.velocity.y);
-                    lookingRight = true;
-                }
-                else
-                {
-                    rb.velocity = new Vector2(-speed, rb.velocity.y);
-                    lookingRight = false;
-                }
+                // if (transform.localScale.x > 0)
+                // {
+                //     rb.velocity = new Vector2(speed, rb.velocity.y);
+                //     lookingRight = true;
+                // }
+                // else
+                // {
+                //     rb.velocity = new Vector2(-speed, rb.velocity.y);
+                //     lookingRight = false;
+                // }
                 break;
             case EnemyStates.Surpised:
-                rb.velocity = new Vector2(0, jumpForce);
-                rb.velocity = new Vector2(0, jumpForce);
                 rb.velocity = new Vector2(0, jumpForce);
 
                 ChangeState(EnemyStates.Chase);
@@ -119,6 +120,18 @@ public class Boss : Enemy
                 {
                     ChangeState(EnemyStates.Surpised);
                     timer = 0;
+                    if (lookingRight)
+                    {
+                        rb.velocity = new Vector2(-speed, rb.velocity.y);
+                    }
+                    else
+                    {
+                        rb.velocity = new Vector2(speed, rb.velocity.y);
+                    }
+
+                    // Inverte a direção visualmente
+                    lookingRight = !lookingRight;
+                    transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
                 }
                 break;
             case EnemyStates.Chase:
@@ -140,22 +153,23 @@ public class Boss : Enemy
     {
         // Aguarda o momento certo para instanciar o fireball
         anim.SetTrigger("Shoot");
-        yield return new WaitForSeconds(0.50f);
+        yield return new WaitForSeconds(0.60f);
 
-        // Instancia o fireball
+        // Instancia o fireball e remove do Parent
         GameObject _fireBall = Instantiate(sideFireBall, sideAttackTrasnform.position, Quaternion.identity);
+        _fireBall.transform.SetParent(null); // Garante que ele não fique preso ao transform de origem
 
-        if(lookingRight)
+        // Define a direção correta
+        if (lookingRight)
         {
-            // Define a rotação do fireball
             _fireBall.transform.eulerAngles = Vector3.zero;
         } 
         else
         {
-            _fireBall.transform.eulerAngles = new Vector2(_fireBall.transform.eulerAngles.x, 180);
-        }   
+            _fireBall.transform.eulerAngles = new Vector3(0, 180, 0); // Gira corretamente em 2D
+        }
 
-        yield return new WaitForSeconds(0.40f);
+        yield return new WaitForSeconds(1.5f);
         isAttacking = false;
 
         // Muda o estado para Idle
@@ -169,6 +183,9 @@ public class Boss : Enemy
         if (GetCurrentEnemyState == EnemyStates.Idle)
         {
             transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+            rb.velocity = new Vector2(0, jumpForce);
+            audioSource.PlayOneShot(roarSound);
+            ChangeState(EnemyStates.Surpised);
         }
 
         if (health <= 0)

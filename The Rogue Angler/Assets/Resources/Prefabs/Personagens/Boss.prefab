@@ -195,18 +195,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9ca9e20433c8f645b5a536b49f97466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1000
+  health: 50
   recoilLength: 0.05
   recoilFactor: 0.1
   isRecoiling: 0
   speed: 2
   damage: 2
   orangeBlood: {fileID: 5496950027884659228, guid: 3c0ba18a521659d4781e8756838ad231, type: 3}
-  hurtSound: {fileID: 8300000, guid: fa926849c3136054aa20a1b92e1972fd, type: 3}
+  hurtSound: {fileID: 8300000, guid: a57f85f58fca7b14e9e508a8cb9cab39, type: 3}
   ledgeCheckX: 4
   ledgeCheckY: 3
   chargeSpeedMultiplier: 3
   chargeDuration: 3
+  stunDuration: 3
   jumpForce: 20
   whatIsGround:
     serializedVersion: 2
@@ -214,6 +215,7 @@ MonoBehaviour:
   sideFireBall: {fileID: 3426710477736152910, guid: bb47d6ff9f10ca941943815debddb4e2, type: 3}
   sideAttackTrasnform: {fileID: 5184897899211349621}
   sideAttackArea: {x: 3, y: 2}
+  roarSound: {fileID: 8300000, guid: 194c1d50cc3c5ae44b6e5fc7e2a30f07, type: 3}
 --- !u!82 &-2625276495198278060
 AudioSource:
   m_ObjectHideFlags: 0
