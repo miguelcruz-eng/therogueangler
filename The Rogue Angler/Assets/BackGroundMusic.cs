@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossFight : MonoBehaviour
+public class BackGroundMusic : MonoBehaviour
 {
-    [SerializeField] AudioClip backgroundMusic; // Música de fundo
+    [SerializeField] AudioClip musicTheme; // Música de fundo
+    [SerializeField] AudioClip bossTheme; // Música de fundo
+    [SerializeField] AudioClip victoryTheme; // Música de fundo
     private AudioSource audioSource;
 
     void Awake()
@@ -13,8 +15,8 @@ public class BossFight : MonoBehaviour
         // DontDestroyOnLoad(gameObject);
 
         // Inicializa o AudioSource
-        audioSource = gameObject.AddComponent<AudioSource>();
-        audioSource.clip = backgroundMusic;
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = musicTheme;
         audioSource.loop = true;
         audioSource.playOnAwake = false;
     }
@@ -29,6 +31,7 @@ public class BossFight : MonoBehaviour
         if (!audioSource.isPlaying)
         {
             audioSource.Play();
+            SetVolume(0.3f);
         }
     }
 
@@ -40,8 +43,8 @@ public class BossFight : MonoBehaviour
         }
     }
 
-    // public void SetVolume(float volume)
-    // {
-    //     audioSource.volume = Mathf.Clamp01(volume);
-    // }
+    public void SetVolume(float volume)
+    {
+        audioSource.volume = Mathf.Clamp01(volume);
+    }
 }

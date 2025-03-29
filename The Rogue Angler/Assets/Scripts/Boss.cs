@@ -17,6 +17,8 @@ public class Boss : Enemy
     [SerializeField] AudioClip roarSound;
     [SerializeField] AudioClip deathSound;
 
+    [SerializeField] GameObject music;
+
     private bool lookingRight = true;
     private bool isAttacking = false;
 
