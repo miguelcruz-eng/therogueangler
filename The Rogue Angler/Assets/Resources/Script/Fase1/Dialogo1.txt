@@ -1,5 +1,5 @@
 Character(ROG, Pescador, color=orange, image=pescador)
-Character(NAR, narracao, color=black)
+Character(NAR, narrador, color=black)
 label start
 show cenario with Fade
 ROG \"Quanta bagunça, precisei parar a pescaria para checar.

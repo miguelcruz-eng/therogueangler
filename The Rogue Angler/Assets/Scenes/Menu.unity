@@ -182,7 +182,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "Um Jogo desenvolvido por Miguel Cruz.\nCr\xE9ditos:\nLaura Francine\nLucas
-    Eduardo"
+    Eduardo\nAndr\xE9 Pires"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -6705,8 +6705,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 0.07495022, y: -0.0662508, z: 0}
-    m_Extent: {x: 20.947151, y: 20.770649, z: 0}
+    m_Center: {x: 0.0682497, y: -0.061850548, z: 0}
+    m_Extent: {x: 20.94875, y: 20.781849, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0

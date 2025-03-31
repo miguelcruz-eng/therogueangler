@@ -21,16 +21,21 @@ public class SettingsMenu : MonoBehaviour
 
     private void DeleteData(string fileName)
     {
-        string filePath = Application.persistentDataPath + "/" + fileName;
+        using (BinaryWriter writer = new BinaryWriter(File.OpenWrite(Application.persistentDataPath + "/save.player.data")))
+        {
+            writer.Write(50);
+            writer.Write(1f);
 
-        if (File.Exists(filePath))
-        {
-            File.Delete(filePath);
-            Debug.Log($"Arquivo {fileName} apagado!");
+            writer.Write(-39.35f);
+            writer.Write(0f);
+
+            writer.Write("Fase1");
         }
-        else
+        using(BinaryWriter writer = new BinaryWriter(File.OpenWrite(Application.persistentDataPath + "/save.point.data")))
         {
-            Debug.Log($"Arquivo {fileName} não encontrado.");
+            writer.Write("Fase1");
+            writer.Write(-39.35f);
+            writer.Write(0f);
         }
     }
 

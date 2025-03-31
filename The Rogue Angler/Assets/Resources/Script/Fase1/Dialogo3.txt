@@ -1,5 +1,5 @@
 Character(ROG, Pescador, color=orange, image=pescador)
-Character(NAR, narracao, color=black)
+Character(NAR, narrador, color=black)
 Character(PXE, pexe, color=blue, image=pexe)
 label start
 show cenario with Fade

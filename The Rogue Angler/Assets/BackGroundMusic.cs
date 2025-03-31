@@ -7,7 +7,9 @@ public class BackGroundMusic : MonoBehaviour
     [SerializeField] AudioClip musicTheme; // Música de fundo
     [SerializeField] AudioClip bossTheme; // Música de fundo
     [SerializeField] AudioClip victoryTheme; // Música de fundo
-    private AudioSource audioSource;
+
+    [SerializeField] private FadeUI endScreen;
+    public AudioSource audioSource;
 
     void Awake()
     {
@@ -26,6 +28,24 @@ public class BackGroundMusic : MonoBehaviour
         PlayMusic();
     }
 
+    public void Victory()
+    {
+        audioSource.Stop(); // Para a música atual antes de tocar a nova
+        audioSource.PlayOneShot(victoryTheme);
+        StartCoroutine(WaitEnd());
+    }
+
+    IEnumerator WaitEnd()
+    {
+        yield return new WaitForSeconds(victoryTheme.length); // Espera até a música de vitória terminar
+        audioSource.clip = bossTheme;
+        audioSource.Play();
+        SetVolume(0.3f);
+        
+        endScreen.FadeUIIn(0.5f);
+        Time.timeScale = 0;
+        GameManager.Instance.gameIsPaused = true;
+    }
     public void PlayMusic()
     {
         if (!audioSource.isPlaying)

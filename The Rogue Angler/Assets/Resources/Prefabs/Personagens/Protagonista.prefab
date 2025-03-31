@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 7070062137796611}
   - component: {fileID: 4950798199820236742}
   - component: {fileID: 3946614660507344762}
+  - component: {fileID: 2880503944242853189}
   m_Layer: 8
   m_Name: Protagonista
   m_TagString: Player
@@ -376,6 +377,7 @@ MonoBehaviour:
   cutscene: 0
   alive: 1
   bobing: 0
+  fishing: 0
 --- !u!95 &4950798199820236742
 Animator:
   serializedVersion: 5
@@ -493,3 +495,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2880503944242853189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7592053773947900141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb719fd9fced32140919482eb76754d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

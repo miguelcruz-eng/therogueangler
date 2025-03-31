@@ -37,7 +37,6 @@ public class BossTrigger : MonoBehaviour
     {
         if(_other.CompareTag("Player"))
         {
-            Debug.Log("entrou");
             inRange = true;
         } 
     }

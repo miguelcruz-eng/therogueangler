@@ -202,8 +202,8 @@ MonoBehaviour:
   speed: 2
   damage: 2
   orangeBlood: {fileID: 5496950027884659228, guid: 3c0ba18a521659d4781e8756838ad231, type: 3}
-  hurtSound: {fileID: 8300000, guid: a57f85f58fca7b14e9e508a8cb9cab39, type: 3}
-  ledgeCheckX: 4
+  hurtSound: {fileID: 8300000, guid: e8ad2d0822d723243b570c6a21a1b875, type: 3}
+  ledgeCheckX: 2
   ledgeCheckY: 3
   chargeSpeedMultiplier: 3
   chargeDuration: 3
@@ -214,8 +214,13 @@ MonoBehaviour:
     m_Bits: 8
   sideFireBall: {fileID: 3426710477736152910, guid: bb47d6ff9f10ca941943815debddb4e2, type: 3}
   sideAttackTrasnform: {fileID: 5184897899211349621}
-  sideAttackArea: {x: 3, y: 2}
+  sideAttackArea: {x: 1.5, y: 1.5}
   roarSound: {fileID: 8300000, guid: 194c1d50cc3c5ae44b6e5fc7e2a30f07, type: 3}
+  deathSound: {fileID: 8300000, guid: e1f6e4255f8b2034e9dee6d5501c7f74, type: 3}
+  bashSound: {fileID: 8300000, guid: 2d3360705bc463f4baa529e2919030f1, type: 3}
+  poundSound: {fileID: 8300000, guid: dd2785f5e2b4b3b4aa024af136d8e165, type: 3}
+  music: {fileID: 0}
+  stun: {fileID: 4811229719661495509, guid: 6e78abf0358910f4999f37b82151c395, type: 3}
 --- !u!82 &-2625276495198278060
 AudioSource:
   m_ObjectHideFlags: 0
@@ -337,7 +342,7 @@ Transform:
   m_GameObject: {fileID: 7218543492789286600}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.251, y: 0, z: 0}
+  m_LocalPosition: {x: 0.123, y: 0.008, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
