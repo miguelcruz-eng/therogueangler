@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] SavePoint savedLocation;
 
     [SerializeField] private FadeUI pauseMenu;
+    [SerializeField] private FadeUI endScreen;
     [SerializeField] private float fadeTime;
     public bool gameIsPaused;
 
@@ -56,11 +57,23 @@ public class GameManager : MonoBehaviour
         gameIsPaused = false;
     }
 
+    public void EndGame()
+    {
+        endScreen.FadeUIIn(fadeTime);
+        Time.timeScale = 0;
+        gameIsPaused = true;
+    }
+
     public void SaveScene()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
         SaveData.Instance.sceneNames.Add(currentSceneName);
         Debug.Log("saved" + currentSceneName);
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 
     public void RespawnPlayer()

@@ -1,0 +1,8 @@
+Character(ROG, Pescador, color=orange, image=pescador)
+Character(NAR, narrador, color=black)
+Character(OLD, Anciao, color=red, image=oldman)
+label start
+show cenario with Fade
+ROG \"...
+ROG \"É melhor eu me apressar...
+screen cenario with Fade

@@ -7,8 +7,6 @@ public class BackGroundMusic : MonoBehaviour
     [SerializeField] AudioClip musicTheme; // Música de fundo
     [SerializeField] AudioClip bossTheme; // Música de fundo
     [SerializeField] AudioClip victoryTheme; // Música de fundo
-
-    [SerializeField] private FadeUI endScreen;
     public AudioSource audioSource;
 
     void Awake()
@@ -42,9 +40,7 @@ public class BackGroundMusic : MonoBehaviour
         audioSource.Play();
         SetVolume(0.3f);
         
-        endScreen.FadeUIIn(0.5f);
-        Time.timeScale = 0;
-        GameManager.Instance.gameIsPaused = true;
+        GameManager.Instance.EndGame();
     }
     public void PlayMusic()
     {
